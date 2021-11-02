@@ -107,6 +107,55 @@ int main () {
 
                 }
 
+            //Verificacion diagonal hacia la izquierda
+            } else if (matriz [i][j] == num && matriz [i+1][j-1] == num1 ){
+
+                if (num + num1 == 10) {
+                  matriz [i][j] = 0;
+                  matriz [i+1][j-1] = 0;
+                  printf("\t");
+                  options++;
+                  counter++;
+
+                } else if(num == num1) {
+
+                    matriz [i][j] = 0;
+                  matriz [i+1][j-1] = 0;
+                  printf("\t");
+                  options++;
+                  counter++;
+
+                } else {
+
+                    printf("%d\t", matriz[i][j]);
+
+                }
+
+                //Verificacion diagonal hacia la derecha
+            } else if (matriz [i][j] == num && matriz [i+1][j+2] == num1 ){
+
+                if (num + num1 == 10) {
+                  matriz [i][j] = 0;
+                  matriz [i+1][j+2] = 0;
+                  printf("\t");
+                  options++;
+                  counter++;
+
+                } else if(num == num1) {
+
+                    matriz [i][j] = 0;
+                  matriz [i+1][j+2] = 0;
+                  printf("\t");
+                  options++;
+                  counter++;
+
+                } else {
+
+                    printf("%d\t", matriz[i][j]);
+
+                }
+
+                //Verificacion diagonal hacia la izquierda
             } else {
 
                 printf("%d\t", matriz[i][j]);
