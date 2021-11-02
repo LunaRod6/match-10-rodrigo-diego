@@ -5,7 +5,21 @@ int main () {
 
    int matriz [3][9];
    int num, num1, options, sum = 0, turns, counter, error, q, nPlayers, p = 0;
-   
+
+    printf("\n");
+    printf("--------------------------- Match-10 -----------------------------------------\n\n"
+    "Match-10 es un juego que consiste en encontrar parejas de numeros, que sumados den = 10 o que sean el mismo numero.\n"
+    "Las parejas pueden formarse con numeros adyacentes (Horizontal, Vertical o Diagonal). Cada pareja encontrada suma puntos\n"
+    "segun la tabla a continuacion.\n\n"
+    
+    "Puntos\t Tipo de pareja\n"
+    "-----------------------------------------------------------\n"
+    "1\t *Por encontrar una pareja de números con valores \n"
+    "\t iguales en celdas adyacentes\n\n"
+    "\t *Por encontrar una pareja de números con valores\n"
+    "\t que sumen 10 en celdas adyacentes\n"
+    "-----------------------------------------------------------\n\n");
+
    printf("Seleccione el numero de jugadores: ");
    scanf("%d", &nPlayers);
 
@@ -32,11 +46,13 @@ int player [nPlayers];
   do {
 
       //Aqui el usuario elije las parejas que desea eliminar
-      printf("Turno del jugador: %d\n", p+1);
-       printf("Escoja el primer numero: \n");
+      printf("Turno del jugador: %d\n\n", p+1);
+       printf("Escoja el primer numero:");
         scanf("%d", &num);
-        printf("Escoja el segundo numero: \n");
+        printf("\n");
+        printf("Escoja el segundo numero:");
         scanf("%d", &num1);
+        printf("\n");
 
         printf("\n");
 
