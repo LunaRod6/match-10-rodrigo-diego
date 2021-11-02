@@ -79,6 +79,7 @@ int player [nPlayers];
                   printf("\t");
                   options++;
                   counter++;
+                  player[p] += 1;
                   
                     //Verifica si las parejas son el mismo numero
                 } else if(num == num1) {
@@ -88,6 +89,7 @@ int player [nPlayers];
                   printf("\t");
                   options++;
                   counter++;
+                  player[p] += 1;
 
                 } else {
 
@@ -104,6 +106,7 @@ int player [nPlayers];
                   printf("\t");
                   options++;
                   counter++;
+                  player[p] += 1;
 
                 } else if(num == num1) {
 
@@ -112,6 +115,7 @@ int player [nPlayers];
                   printf("\t");
                   options++;
                   counter++;
+                  player[p] += 1;
 
                 } else {
 
@@ -144,11 +148,11 @@ int player [nPlayers];
                 }
 
                 //Verificacion diagonal hacia la derecha
-            } else if (matriz [i][j] == num && matriz [i+1][j+2] == num1 ){
+            } else if (matriz [i][j] == num && matriz [i+1][j+1] == num1 ){
 
                 if (num + num1 == 10) {
                   matriz [i][j] = 0;
-                  matriz [i+1][j+2] = 0;
+                  matriz [i+1][j+1] = 0;
                   printf("\t");
                   options++;
                   counter++;
@@ -156,7 +160,7 @@ int player [nPlayers];
                 } else if(num == num1) {
 
                     matriz [i][j] = 0;
-                  matriz [i+1][j+2] = 0;
+                  matriz [i+1][j+1] = 0;
                   printf("\t");
                   options++;
                   counter++;
