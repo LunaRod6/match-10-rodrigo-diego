@@ -4,23 +4,35 @@
 int main () {
 
    int matriz [3][9];
-   int num, num1, options, sum, turns, counter, error, q ;
+   int num, num1, options, sum = 0, turns, counter, error, q, nPlayers, p = 0;
    
+   printf("Seleccione el numero de jugadores: ");
+   scanf("%d", &nPlayers);
+
+   printf("\n\n");
+
+   printf("--------------------------------------------------------------------\n");
+
+int player [nPlayers];
 
    printf("\n");
+
     //Creacion del espacio para la matriz junto con los numeros random.
     for (int i = 0; i <3; i++){
         for (int j = 0; j<9; j++){
             matriz [i][j] = (rand()%(9-1+1))+1;
-            printf("%d\t", matriz [i][j]);
+            printf("|%d|\t", matriz [i][j]);
         }
     printf("\n\n");
      }
   
+    printf("--------------------------------------------------------------------\n\n");
+
   //Loop 
   do {
 
       //Aqui el usuario elije las parejas que desea eliminar
+      printf("Turno del jugador: %d\n", p+1);
        printf("Escoja el primer numero: \n");
         scanf("%d", &num);
         printf("Escoja el segundo numero: \n");
@@ -40,7 +52,7 @@ int main () {
 //El options == 2 verifica si en el loop ya se han eliminado 2 numeros, para evitar que se eliminen los casos repetidos y si la posicion no contiene 0 escribe el numero correspondiente a la casilla
             if (options == 2 && matriz [i][j] != 0) {
 
-                printf("%d\t", matriz[i][j]);
+                printf("|%d|\t", matriz[i][j]);
 
 //Si options == 2 y el numero en la casilla corresponde a 0 entonces imprime solo el espacio, para dar la sensacion de estar eliminado
             } else if (options == 2 && matriz [i][j] == 0){
@@ -79,7 +91,7 @@ int main () {
 
                 } else {
 
-                    printf("%d\t", matriz[i][j]);
+                    printf("|%d|\t", matriz[i][j]);
 
                 }
 
@@ -103,7 +115,7 @@ int main () {
 
                 } else {
 
-                    printf("%d\t", matriz[i][j]);
+                    printf("|%d|\t", matriz[i][j]);
 
                 }
 
@@ -127,7 +139,7 @@ int main () {
 
                 } else {
 
-                    printf("%d\t", matriz[i][j]);
+                    printf("|%d|\t", matriz[i][j]);
 
                 }
 
@@ -151,14 +163,14 @@ int main () {
 
                 } else {
 
-                    printf("%d\t", matriz[i][j]);
+                    printf("|%d|\t", matriz[i][j]);
 
                 }
 
                 //Verificacion diagonal hacia la izquierda
             } else {
 
-                printf("%d\t", matriz[i][j]);
+                printf("|%d|\t", matriz[i][j]);
                 
                 }
         }
@@ -166,9 +178,14 @@ int main () {
             printf("\n\n");
             turns+= 1;
             
+
+            
+            
         }
 
-    
+        p+= 1;
+        if (p == nPlayers){ p = 0; }
+
       //Condicion de prueba, falta designar la condicion correcta.
     } while ( sum < 15); 
 
