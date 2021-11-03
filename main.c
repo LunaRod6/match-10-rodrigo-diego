@@ -6,6 +6,8 @@ int main () {
    int matriz [3][9];
    int num, num1, options, sum = 0, turns, counter, error, q, nPlayers, p = 0;
 
+    //instrucciones del juego
+
     printf("\n");
     printf("--------------------------- Match-10 -----------------------------------------\n\n"
     "Match-10 es un juego que consiste en encontrar parejas de numeros, que sumados den = 10 o que sean el mismo numero.\n"
@@ -15,10 +17,39 @@ int main () {
     "Puntos\t Tipo de pareja\n"
     "-----------------------------------------------------------\n"
     "1\t *Por encontrar una pareja de números con valores \n"
-    "\t iguales en celdas adyacentes\n\n"
+    "\t iguales en celdas adyacentes. \n\n"
     "\t *Por encontrar una pareja de números con valores\n"
-    "\t que sumen 10 en celdas adyacentes\n"
+    "\t que sumen 10 en celdas adyacentes. \n"
+    "-----------------------------------------------------------\n"
+    "2\t *Por encontrar un pareja de números con valores \n"
+    "\t iguales, de los cuales uno se encuentra al final \n"
+    "\t de una línea y el otra al comienzo de la línea \n"
+    "\t siguiente iguales en celdas adyacentes. \n\n"
+    "\t *Por encontrar un pareja de números con valores \n"
+    "\t que sumen 10, de los cuales uno se encuentra al \n"
+    "\t final de una línea y el otra al comienzo de la \n"
+    "\t línea siguiente. \n"
+    "-----------------------------------------------------------\n"
+    "4\t *Por encontrar parejas de números con valores \n"
+    "\t iguales separados por celdas vacías por encontrar \n"
+    "\t parejas de números con valores diferentes que \n"
+    "\t sumen 10 separados por celdas vacías. \n\n"
+    "\t Por encontrar una pareja de números con valores \n"
+    "\t iguales, de los cuales uno se encuentra al final \n"
+    "\t de una línea y el otra al comienzo de la línea \n"
+    "\t siguiente y que están separados por celdas vacías. \n\n"
+    "\t Por encontrar un pareja de números con valores \n"
+    "\t que sumen 10, de los cuales uno se encuentra al \n"
+    "\t final de una línea y el otra al comienzo de la \n"
+    "\t línea siguiente y que están separados por celdas \n"
+    "\t vacías. \n"
+    "-----------------------------------------------------------\n"
+    "10\t *Por eliminar una línea de números. \n"
+    "-----------------------------------------------------------\n"
+    "150\t *Por encontrar todas las parejas en el tablero. \n"
     "-----------------------------------------------------------\n\n");
+
+   //seleccion de cuantos jugadores tendra el juego
 
    printf("Seleccione el numero de jugadores: ");
    scanf("%d", &nPlayers);
