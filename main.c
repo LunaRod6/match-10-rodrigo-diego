@@ -3,6 +3,7 @@
 
 int main () {
 
+   srand(time(NULL));
    int matriz [3][9];
    int num, num1, options, sum = 0, turns, counter, error, q, nPlayers, p = 0;
 
