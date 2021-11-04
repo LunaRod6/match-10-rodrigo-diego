@@ -83,7 +83,7 @@ int player [nPlayers];
 
     //Creacion del espacio para la matriz junto con los numeros random.
    
-    printf("--------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------\n\n");
 
     for (int i = 0; i <3; i++){
         for (int j = 0; j<9; j++){
@@ -106,10 +106,9 @@ int player [nPlayers];
 
   if (nRow == 1) { 
         
-        cRow = 'a';
         printf("Desea agregar una columna? s/n:");
-        scanf("%c", &cRow);
-        printf("\n\n");
+        scanf(" %c", &cRow);
+        printf("\n");
 
         if (cRow == 's' || cRow == 'S') {
 
@@ -223,7 +222,7 @@ int player [nPlayers];
         printf("\n");
         printf("Escoja la primera posicion Horizontal:");
         scanf("%d", &numX);
-        printf("\n");
+        printf(")\n");
         printf("Escoja la segunda posicion Vertical:");
         scanf("%d", &numY2);
         printf("\n");
@@ -277,6 +276,8 @@ int player [nPlayers];
       
     } else {
 
+      printf("Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar\n\n");
+
       for (int i = 0; i <cantRow; i++){
         for (int j = 0; j<9; j++){
 
@@ -294,10 +295,11 @@ int player [nPlayers];
         printf("\n\n");
       }
 
+    p --;
+    nRow -= 2;
+
     }
-      nRow++;
-      p+= 1;
-      if (p == nPlayers){ p = 0; }
+      
         
       
 
@@ -470,8 +472,12 @@ int player [nPlayers];
       //Condicion de prueba, falta designar la condicion correcta.
         }
         **/
-
+       nRow++;
       }
+    
+      p++;
+      if (p == nPlayers){ p = 0; }
+
     } while ( sum != 0); 
 
   printf("--------Resultados--------\n\n");
