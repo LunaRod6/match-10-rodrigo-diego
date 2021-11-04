@@ -1,21 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main () {
 
    srand(time(NULL));
-   int matriz [3][9];
-   int num, num1, options, sum = 0, turns, counter, error, q, nPlayers, p = 0;
+   int matriz [9][9];
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3;
+   char cRow ;
 
     //instrucciones del juego
 
     printf("\n");
     printf("--------------------------- Match-10 -----------------------------------------\n\n"
-    "Match-10 es un juego que consiste en encontrar parejas de numeros, que sumados den = 10 o que sean el mismo numero.\n"
+    "Match-10 es un juego que consiste en encontrar parejas de numeros, que sumados den como resultado 10 o que sean el mismo numero.\n"
     "Las parejas pueden formarse con numeros adyacentes (Horizontal, Vertical o Diagonal). Cada pareja encontrada suma puntos\n"
     "segun la tabla a continuacion.\n\n"
-    
-    "Puntos\t Tipo de pareja\n"
+    "Cada jugador debe de elegir las coordenadas de los numeros que desea eliminar\n"
+    "primero se elige la posicion vertical y luego la horizontal.\n\n"
+
+
+    "--------------------- Coordenadas del tablero ----------------------\n\n");
+
+    for (int i = 0; i <3; i++){
+        for (int j = 0; j<9; j++){
+          printf("(%d,%d)\t", i, j);
+        }
+    printf("\n\n");
+     }
+
+    printf("--------------------------------------------------------------------\n");
+    printf("\n"
+
+    "-----------------------------------------------------------\n"
+    "Puntos\t |\t Tipo de pareja\n"
     "-----------------------------------------------------------\n"
     "1\t *Por encontrar una pareja de números con valores \n"
     "\t iguales en celdas adyacentes. \n\n"
@@ -64,6 +82,9 @@ int player [nPlayers];
    printf("\n");
 
     //Creacion del espacio para la matriz junto con los numeros random.
+   
+    printf("--------------------------------------------------------------------\n");
+
     for (int i = 0; i <3; i++){
         for (int j = 0; j<9; j++){
             matriz [i][j] = (rand()%(9-1+1))+1;
@@ -80,23 +101,220 @@ int player [nPlayers];
     sum = 0;
 
       //Aqui el usuario elije las parejas que desea eliminar
+    
       printf("Turno del jugador: %d\n\n", p+1);
-       printf("Escoja el primer numero:");
-        scanf("%d", &num);
-        printf("\n");
-        printf("Escoja el segundo numero:");
-        scanf("%d", &num1);
-        printf("\n");
 
-        printf("\n");
+  if (nRow == 1) { 
+        
+        cRow = 'a';
+        printf("Desea agregar una columna? s/n:");
+        scanf("%c", &cRow);
+        printf("\n\n");
 
+        if (cRow == 's' || cRow == 'S') {
+
+          cantRow++;
+
+        for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz[i][j]);
+          
+          }
+        }
+        printf("\n\n");
+      }
+
+        
+    } else {
+
+        printf("Escoja la primera posicion Vertical:");
+        scanf("%d", &numY);
+        printf("\n");
+        printf("Escoja la primera posicion Horizontal:");
+        scanf("%d", &numX);
+        printf("\n");
+        printf("Escoja la segunda posicion Vertical:");
+        scanf("%d", &numY2);
+        printf("\n");
+        printf("Escoja la segunda posicion Horizontal:");
+        scanf("%d", &numX2);
+        printf("\n\n"); 
+
+      if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
+
+        matriz[numY][numX] = 0;
+        matriz[numY2][numX2] = 0;
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
+
+      matriz[numY][numX] = 0;
+      matriz[numY2][numX2] = 0;
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+      
+    } else {
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+    }
+    
+      p+= 1;
+      if (p == nPlayers){ p = 0; }
+
+    }       
+} else {
+
+        printf("Escoja la primera posicion Vertical:");
+        scanf("%d", &numY);
+        printf("\n");
+        printf("Escoja la primera posicion Horizontal:");
+        scanf("%d", &numX);
+        printf("\n");
+        printf("Escoja la segunda posicion Vertical:");
+        scanf("%d", &numY2);
+        printf("\n");
+        printf("Escoja la segunda posicion Horizontal:");
+        scanf("%d", &numX2);
+        printf("\n\n"); 
+
+      if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
+
+        matriz[numY][numX] = 0;
+        matriz[numY2][numX2] = 0;
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
+
+      matriz[numY][numX] = 0;
+      matriz[numY2][numX2] = 0;
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+      
+    } else {
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+    }
+      nRow++;
+      p+= 1;
+      if (p == nPlayers){ p = 0; }
+        
+      
+
+    
+
+
+
+
+/**
 //Reinicia los contadores que ayudan a verificar las parejas en el loop y evitar eliminar mas numeros sin necesidad.
         options = 0;
         counter = 0;
         error = 0;
 
 //Verifica las parejas ingresadas y trabaja dependiendo del caso
-      for (int i = 0; i <3; i++){
+  
+      for (int i = 0; i <cantRow; i++){
         for (int j = 0; j<9; j++){
 
 //El options == 2 verifica si en el loop ya se han eliminado 2 numeros, para evitar que se eliminen los casos repetidos y si la posicion no contiene 0 escribe el numero correspondiente a la casilla
@@ -149,16 +367,7 @@ int player [nPlayers];
 
                 } else {
 
-                    sum += matriz[i][j];
-                    printf("|%d|\t", matriz[i][j]);
-
-                }
-
-            //Este codigo sirve para verificar las parejas de manera Vertical, de ser verdadero les asigna a cada posicion un 0, imprime solo un espacio y le agrega a options un valor para llevar control de los numeros utilizados en el loop y counter para confirmar que ya se encontro el primer numero del loop.
-            } else if (matriz [i][j] == num && matriz [i+1][j] == num1){
-
-                if (num + num1 == 10) {
-                  matriz [i][j] = 0;
+                    sum += matriz[i][j];void command();
                   matriz [i+1][j] = 0;
                   sum += matriz[i][j];
                   printf("\t");
@@ -254,10 +463,15 @@ int player [nPlayers];
             
         }
 
+        nRow++;
         p+= 1;
         if (p == nPlayers){ p = 0; }
 
       //Condicion de prueba, falta designar la condicion correcta.
+        }
+        **/
+
+      }
     } while ( sum != 0); 
 
   printf("--------Resultados--------\n\n");
