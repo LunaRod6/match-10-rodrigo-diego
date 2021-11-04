@@ -229,8 +229,32 @@ int player [nPlayers];
         printf("Escoja la segunda posicion Horizontal:");
         scanf("%d", &numX2);
         printf("\n\n"); 
+        
+      if (numX == numX2 && numY == numY2){
 
-      if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
+        printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+    p --;
+    nRow -= 2;
+
+     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
