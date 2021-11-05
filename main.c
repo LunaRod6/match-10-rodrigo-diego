@@ -6,7 +6,7 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x, yF = 0, xF = 0, again = 1, complete = 1;
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1;
    char cRow ;
    
 
@@ -82,7 +82,9 @@ int player [nPlayers];
 
    printf("\n");
 
-   while (complete > 0 || gameover > 0) {
+do {
+
+    c = 0;
 
     printf("------------------------- Tablero [%d]: -----------------------------\n\n", complete);   
 
@@ -102,8 +104,6 @@ int player [nPlayers];
 
   //Loop 
   do {
-
-    if (again > 0) {
 
     sum = 0;
 
@@ -581,6 +581,7 @@ int player [nPlayers];
       p --;
       nRow --;
     }
+  }
 
     nRow = 1;
 
@@ -588,67 +589,73 @@ int player [nPlayers];
     if (c == 6){
 
       again = 0;
+      
 
-     for (int i = 0; i < 9 ; i++) { //Verifica horizontalmente
+     for (int i = 0; i < 9 ; i++) { 
        for (int j = 0; j < 9; j++) {
          for (int k = 1; k < 9; k++) {
 
-            if (matriz [i][j] + matriz [i][j+k] == 10){
+             if ((matriz [i][j] == 0) && (matriz [i][j+k] == 0)) {
+
+            empty += 0;
+
+            } else if ((matriz [i][j] + matriz [i][j+k] == 10) && (empty == 0)){
 
               again++;
 
-            } else if ((matriz [i][j] == matriz [i][j+k]) && matriz [i][j] > 0) {
+            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
 
-            } else if (matriz [i][j] + matriz [i+k][j] == 10) {
+            } else if ((matriz [i][j] + matriz [i+k][j] == 10) && (empty == 0)) {
 
               again++;
 
-            } else if ((matriz [i][j] == matriz [i+k][j]) && matriz [i][j] > 0) {
+            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
 
-            } else if (matriz [i][j] + matriz [i+k][j+k] == 10) {
+            } else if ((matriz [i][j] + matriz [i+k][j+k] == 10) && (empty == 0)) {
 
               again++;
 
-            } else if ((matriz [i][j] == matriz [i+k][j+k]) && matriz [i][j] > 0) {
+            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
 
             } else {
 
+              empty ++;
               again += 0;
 
             }
          }
+
+        empty = 0;
+
        }
-     }
+     }     
     }
 
     if (sum == 0 && again == 0) {
 
       complete++ ;
+      
 
-    }
+    } else if (sum != 0 && again == 0){
+
+      sum = 0;
+      gameover = 0;
 
     }       
-
     
       p++;
       if (p == nPlayers){ p = 0; }
 
-  } else { 
-    
-    sum = 0;
-    gameover++;
-    
-    }
 
     } while ( sum != 0); 
 
-   }
+   } while (gameover == 0) ;
 
   printf("--------Resultados--------\n\n");
 
