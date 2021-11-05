@@ -6,7 +6,7 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3;
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0;
    char cRow ;
 
     //instrucciones del juego
@@ -106,16 +106,26 @@ int player [nPlayers];
 
   if (nRow == 1) { 
         
-        printf("Desea agregar una columna? s/n:");
+    if (c < 6) {
+        printf("Desea agregar una fila? s/n:");
         scanf(" %c", &cRow);
-        printf("\n");
+        printf("\n"); 
+        
+      } else {
 
-        if (cRow == 's' || cRow == 'S') {
+        printf("Ya no puede agregar filas.\n\n");
+        cRow = 'n';
 
-          cantRow++;
+      }
 
-        for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
+    if (cRow == 's' || cRow == 'S') {
+
+          c++;
+          cantRow++;          
+          d = 0;
+
+        for (int i = 0; i <cantRow; i++) {
+        for (int j = 0; j<9; j++) {
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
@@ -123,8 +133,18 @@ int player [nPlayers];
 
           } else {
           sum += matriz[i][j];
+
+            if (d<9) {
+  
           printf("|%d|\t", matriz[i][j]);
+          matriz[cantRow-1][d] = matriz[i][j];
+          d++;
           
+          } else {
+
+          printf("|%d|\t", matriz[i][j]);
+
+            }
           }
         }
         printf("\n\n");
@@ -229,7 +249,7 @@ int player [nPlayers];
         printf("Escoja la segunda posicion Horizontal:");
         scanf("%d", &numX2);
         printf("\n\n"); 
-        
+
       if (numX == numX2 && numY == numY2){
 
         printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
@@ -298,7 +318,7 @@ int player [nPlayers];
         printf("\n\n");
       }
       
-    } else {
+     } else {
 
       printf("Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar\n\n");
 
