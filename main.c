@@ -6,7 +6,7 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x;
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x, yF = 0, xF = 0, again = 1, complete = 1;
    char cRow ;
    
 
@@ -82,6 +82,10 @@ int player [nPlayers];
 
    printf("\n");
 
+   while (complete > 0 || gameover > 0) {
+
+    printf("------------------------- Tablero [%d]: -----------------------------\n\n", complete);   
+
     //Creacion del espacio para la matriz junto con los numeros random.
    
     printf("--------------------------------------------------------------------\n\n");
@@ -99,20 +103,24 @@ int player [nPlayers];
   //Loop 
   do {
 
+    if (again > 0) {
+
     sum = 0;
 
       //Aqui el usuario elije las parejas que desea eliminar
     
       printf("Turno del jugador: %d\n\n", p+1);
 
-  if (nRow > 0) { 
-        
+  //Verifica si ya paso el primer turno.
+  if (nRow > 0) { //Sirve para comprobar si es el primer turno.
+
+     //Orden para agregar filas   
     if (c < 6) {
         printf("Desea agregar una fila? [%d] s/n:", counter);
         scanf(" %c", &cRow);
         printf("\n"); 
         
-      } else {
+      } else { // Si el usuario ya agrego todas las filas posibles
 
         printf("Ya no puede agregar filas.\n\n");
         cRow = 'n';
@@ -120,7 +128,7 @@ int player [nPlayers];
       }
     }
 
-    if (cRow == 's' || cRow == 'S') {
+    if (cRow == 's' || cRow == 'S') { //Si el usuario desea una nueva fila
 
           counter--;
           c++;
@@ -132,7 +140,7 @@ int player [nPlayers];
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -167,14 +175,14 @@ int player [nPlayers];
         printf("Escoja la primera posicion Horizontal:");
         scanf("%d", &numX);
         printf("\n");
-        printf("Usted ha escogido el numero: |%d|\n\n", matriz[numY][numX]);
+        printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n", matriz[numY][numX], numY, numX);
         printf("Escoja la segunda posicion Vertical:");
         scanf("%d", &numY2);
         printf("\n");
         printf("Escoja la segunda posicion Horizontal:");
         scanf("%d", &numX2);
         printf("\n");
-        printf("Usted ha escogido el numero: |%d|\n\n\n", matriz[numY2][numX2]);
+        printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n\n", matriz[numY2][numX2], numY2, numX2);
 
       //Verificacion si las posiciones seleccionadas son iguales, por ende da error, pero permite volver a intentarlo.
       if (numX == numX2 && numY == numY2){
@@ -186,7 +194,7 @@ int player [nPlayers];
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -222,8 +230,8 @@ int player [nPlayers];
 
         } else {//Vertical y Horizontal (Izquierda y Arriba)
 
-          for (int i = numY2; i >= numY; i++) {
-            for(int j = numX2; j >= numX; j++) {
+          for (int i = numY2; i <= numY; i++) {
+            for(int j = numX2; j <= numX; j++) {
 
               if (matriz[i][j] == 0){
                 space += 0;
@@ -248,12 +256,10 @@ int player [nPlayers];
             if(matriz[y][x] == 0){
 
               space += 0;
-              printf("%d\n", space);
 
             } else {
 
               space += matriz[y][x];
-              printf("%d\n", space);
 
             }
 
@@ -261,7 +267,7 @@ int player [nPlayers];
             x++;
 
           }
-printf("%d\n", space);
+
         } else if (numY < numY2 && numX > numX2) { //Diagonal inferior hacia la Izquierda
 
           y = numY;
@@ -271,7 +277,7 @@ printf("%d\n", space);
 
             if(matriz[y][x] == 0){
 
-              space = 0;
+              space += 0;
 
             } else{
 
@@ -286,14 +292,14 @@ printf("%d\n", space);
 
         } else if (numY2 < numY && numX2 < numX) { //Diagonal superior hacia la Izquierda
 
-          y = numY2;
-          x = numX2;
+          y = numY;
+          x = numX;
 
-          while(y >= numY && x >= numX) {
+          while(y >= numY2 && x >= numX2) {
 
             if(matriz[y][x] == 0){
 
-              space = 0;
+              space += 0;
 
             } else{
 
@@ -301,30 +307,30 @@ printf("%d\n", space);
 
             }
 
-            y++;
-            x++;
+            y--;
+            x--;
 
           }    
 
-        } else { //Diagonal superior hacia la Derecha
+        } else if (numY2 < numY && numX2 > numX) { //Diagonal superior hacia la Derecha
 
-          y = numY2;
-          x = numX2;
+          y = numY;
+          x = numX;
 
-          while(y >= numY && x <= numX) {
+          while(y >= numY2 && x <= numX2) {
 
-            if(matriz[y][x] == 0){
+            if (matriz[y][x] == 0){
 
-              space = 0;
+              space += 0;
 
-            } else{
+            } else {
 
               space += matriz[y][x];
 
             }
 
-            y++;
-            x--;
+            y--;
+            x++;
 
           }      
         }
@@ -332,7 +338,7 @@ printf("%d\n", space);
       }
      
 
-      if (space == 0 || space == 10){ //Comprobacion si se eligio bien. 
+      if (space == 10){ //Comprobacion si se eligio bien. 
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
@@ -342,7 +348,7 @@ printf("%d\n", space);
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -363,7 +369,7 @@ printf("%d\n", space);
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -375,21 +381,148 @@ printf("%d\n", space);
         printf("\n\n");
       }
     p--;
-    }
+    }        
 
+     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor
+      
+      
+     if (numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
+
+        if (numY < numY2 || numX < numX2) {//Vertical y Horizontal (Derecha y Abajo)
+
+          for (int i = numY; i<= numY2; i++) {
+            for(int j = numX; j <= numX2; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        } else {//Vertical y Horizontal (Izquierda y Arriba)
+
+          for (int i = numY2; i <= numY; i++) {
+            for(int j = numX2; j <= numX; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        }
         
+      } else { //Si estan diagonales
 
-     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
+        if (numY < numY2 && numX < numX2) { //Diagonal inferior hacia la Derecha
 
-      matriz[numY][numX] = 0;
-      matriz[numY2][numX2] = 0;
+          y = numY;
+          x = numX;
+
+          while(y <= numY2 && x <= numX2) {
+
+            if(matriz[y][x] == 0){
+
+              space += 0;
+
+            } else {
+
+              space += matriz[y][x];
+
+            }
+
+            y++;
+            x++;
+
+          }
+
+        } else if (numY < numY2 && numX > numX2) { //Diagonal inferior hacia la Izquierda
+
+          y = numY;
+          x = numX;
+
+          while(y <= numY2 && x >= numX2) {
+
+            if(matriz[y][x] == 0){
+
+              space += 0;
+
+            } else{
+
+              space += matriz[y][x];
+
+            }
+
+            y++;
+            x--;
+
+          }  
+
+        } else if (numY2 < numY && numX2 < numX) { //Diagonal superior hacia la Izquierda
+
+          y = numY;
+          x = numX;
+
+          while(y >= numY2 && x >= numX2) {
+
+            if(matriz[y][x] == 0){
+
+              space += 0;
+
+            } else{
+
+              space += matriz[y][x];
+
+            }
+
+            y--;
+            x--;
+
+          }    
+
+        } else if (numY2 < numY && numX2 > numX) { //Diagonal superior hacia la Derecha
+
+          y = numY;
+          x = numX;
+
+          while(y >= numY2 && x <= numX2) {
+
+            if (matriz[y][x] == 0){
+
+              space += 0;
+
+            } else {
+
+              space += matriz[y][x];
+
+            }
+
+            y--;
+            x++;
+
+          }      
+        }
+
+      }
+     
+
+      if (space / 2 == matriz[numY][numX]){ //Comprobacion si se eligio bien. 
+
+        matriz[numY][numX] = 0;
+        matriz[numY2][numX2] = 0;
 
       for (int i = 0; i <cantRow; i++){
         for (int j = 0; j<9; j++){
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -400,8 +533,31 @@ printf("%d\n", space);
         }
         printf("\n\n");
       }
-      
-     } else {
+
+    } else {
+
+      printf("**** Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf(" * \t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+    p--;
+    }        
+
+     } else { //Verifica que el usuario ingreso parejas equivocadas.
 
       printf("*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
 
@@ -410,7 +566,7 @@ printf("%d\n", space);
 
           if (matriz[i][j] == 0) {
             sum += matriz[i][j];
-            printf("\t");
+            printf(" * \t");
 
           } else {
           sum += matriz[i][j];
@@ -426,7 +582,56 @@ printf("%d\n", space);
       nRow --;
     }
 
-    nRow++;
+    nRow = 1;
+
+    //comprobacion final
+    if (c == 6){
+
+      again = 0;
+
+     for (int i = 0; i < 9 ; i++) { //Verifica horizontalmente
+       for (int j = 0; j < 9; j++) {
+         for (int k = 1; k < 9; k++) {
+
+            if (matriz [i][j] + matriz [i][j+k] == 10){
+
+              again++;
+
+            } else if ((matriz [i][j] == matriz [i][j+k]) && matriz [i][j] > 0) {
+
+              again++;
+
+            } else if (matriz [i][j] + matriz [i+k][j] == 10) {
+
+              again++;
+
+            } else if ((matriz [i][j] == matriz [i+k][j]) && matriz [i][j] > 0) {
+
+              again++;
+
+            } else if (matriz [i][j] + matriz [i+k][j+k] == 10) {
+
+              again++;
+
+            } else if ((matriz [i][j] == matriz [i+k][j+k]) && matriz [i][j] > 0) {
+
+              again++;
+
+            } else {
+
+              again += 0;
+
+            }
+         }
+       }
+     }
+    }
+
+    if (sum == 0 && again == 0) {
+
+      complete++ ;
+
+    }
 
     }       
 
@@ -434,11 +639,20 @@ printf("%d\n", space);
       p++;
       if (p == nPlayers){ p = 0; }
 
+  } else { 
+    
+    sum = 0;
+    gameover++;
+    
+    }
+
     } while ( sum != 0); 
+
+   }
 
   printf("--------Resultados--------\n\n");
 
-  for (int l = 0; l<nPlayers; l++ ){
+  for (int l = 0; l < nPlayers; l++ ){
   
   printf("Jugador %d: %d\n\n", l+1, player[l]);
   
