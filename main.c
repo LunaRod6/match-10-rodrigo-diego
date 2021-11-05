@@ -6,7 +6,7 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space;
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x;
    char cRow ;
    
 
@@ -305,6 +305,9 @@ int player [nPlayers];
 } else {
 
         space = 0;
+        y = 0;
+        x = 0;
+
         //Ordenes del usuario
         printf("Escoja la primera posicion Vertical:");
         scanf("%d", &numY);
@@ -349,9 +352,9 @@ int player [nPlayers];
      } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
       
       
-      if(numY == numY2 || numX == numX2) {
+      if(numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
-        if (numY < numY2 || numX < numX2) {
+        if (numY < numY2 || numX < numX2) {//Vertical y Horizontal (Derecha y Abajo)
 
           for (int i = numY; i<= numY2; i++) {
             for(int j = numX; j <= numX2; j++) {
@@ -365,7 +368,7 @@ int player [nPlayers];
             }
           }
 
-        } else if (numY2 < numY || numX2 < numX) {
+      } else if (numY2 < numY || numX2 < numX) {//Vertical y Horizontal (Izquierda y Arriba)
 
           for (int i = numY2; i >= numY; i++) {
             for(int j = numX2; j >= numX; j++) {
@@ -381,6 +384,52 @@ int player [nPlayers];
 
         }
         
+      } else { //Si estan diagonales
+
+        if (numY < numY2 && numX < numX2) { //Diagonal hacia la Derecha
+
+          y = numY;
+          x = numX;
+
+          while(y <= numY2 && x <= numX2) {
+
+            if(matriz[y][x] == 0){
+
+              space = 0;
+
+            } else{
+
+              space += matriz[y][x];
+
+            }
+
+            y++;
+            x++;
+
+          }
+
+      } else if (numY < numY2 && numX > numX2) {  //Diagonal hacia la Izquierda
+
+          y = numY;
+          x = numX;
+
+          while(y <= numY2 && x >= numX2) {
+
+            if(matriz[y][x] == 0){
+
+              space = 0;
+
+            } else{
+
+              space += matriz[y][x];
+
+            }
+
+            y++;
+            x--;
+
+          }      
+        }
       }
      
 
