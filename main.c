@@ -6,8 +6,9 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0;
+   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, error, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space;
    char cRow ;
+   
 
     //instrucciones del juego
 
@@ -107,7 +108,7 @@ int player [nPlayers];
   if (nRow == 1) { 
         
     if (c < 6) {
-        printf("Desea agregar una fila? s/n:");
+        printf("Desea agregar una fila? [%d] s/n:", counter);
         scanf(" %c", &cRow);
         printf("\n"); 
         
@@ -120,6 +121,7 @@ int player [nPlayers];
 
     if (cRow == 's' || cRow == 'S') {
 
+          counter--;
           c++;
           cantRow++;          
           d = 0;
@@ -153,20 +155,62 @@ int player [nPlayers];
         
     } else {
 
+        space = 0;
+        //Ordenes del usuario
         printf("Escoja la primera posicion Vertical:");
         scanf("%d", &numY);
         printf("\n");
         printf("Escoja la primera posicion Horizontal:");
         scanf("%d", &numX);
         printf("\n");
+        printf("Usted ha escogido el numero: |%d|\n\n", matriz[numY][numX]);
         printf("Escoja la segunda posicion Vertical:");
         scanf("%d", &numY2);
         printf("\n");
         printf("Escoja la segunda posicion Horizontal:");
         scanf("%d", &numX2);
-        printf("\n\n"); 
+        printf("\n");
+        printf("Usted ha escogido el numero: |%d|\n\n", matriz[numY2][numX2]);
 
-      if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
+      if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
+      
+      
+      if(numY == numY2 || numX == numX2) {
+
+        if (numY < numY2 || numX < numX2) {
+
+          for (int i = numY; i<= numY2; i++) {
+            for(int j = numX; j <= numX2; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        } else if (numY2 < numY || numX2 < numX) {
+
+          for (int i = numY2; i >= numY; i++) {
+            for(int j = numX2; j >= numX; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        }
+        
+      }
+     
+
+      if (space == 0 || space == 10){
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
@@ -188,7 +232,30 @@ int player [nPlayers];
         printf("\n\n");
       }
 
-     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
+    } else {
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+    }
+
+        
+
+    } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
 
       matriz[numY][numX] = 0;
       matriz[numY2][numX2] = 0;
@@ -237,19 +304,24 @@ int player [nPlayers];
     }       
 } else {
 
+        space = 0;
+        //Ordenes del usuario
         printf("Escoja la primera posicion Vertical:");
         scanf("%d", &numY);
         printf("\n");
         printf("Escoja la primera posicion Horizontal:");
         scanf("%d", &numX);
-        printf(")\n");
+        printf("\n");
+        printf("Usted ha escogido el numero: |%d|\n\n", matriz[numY][numX]);
         printf("Escoja la segunda posicion Vertical:");
         scanf("%d", &numY2);
         printf("\n");
         printf("Escoja la segunda posicion Horizontal:");
         scanf("%d", &numX2);
-        printf("\n\n"); 
+        printf("\n");
+        printf("Usted ha escogido el numero: |%d|\n\n", matriz[numY2][numX2]);
 
+      //Verificacion si las posiciones seleccionadas son iguales, por ende da error, pero permite volver a intentarlo.
       if (numX == numX2 && numY == numY2){
 
         printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
@@ -272,9 +344,47 @@ int player [nPlayers];
       }
 
     p --;
-    nRow -= 2;
+    nRow --;
 
-     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {
+     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
+      
+      
+      if(numY == numY2 || numX == numX2) {
+
+        if (numY < numY2 || numX < numX2) {
+
+          for (int i = numY; i<= numY2; i++) {
+            for(int j = numX; j <= numX2; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        } else if (numY2 < numY || numX2 < numX) {
+
+          for (int i = numY2; i >= numY; i++) {
+            for(int j = numX2; j >= numX; j++) {
+
+              if (matriz[i][j] == 0){
+                space += 0;
+              } else {
+                space += matriz[i][j];
+              }
+
+            }
+          }
+
+        }
+        
+      }
+     
+
+      if (space == 0 || space == 10){
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
@@ -295,6 +405,29 @@ int player [nPlayers];
         }
         printf("\n\n");
       }
+
+    } else {
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf("\t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+    }
+
+        
 
      } else if (matriz[numY][numX] == matriz[numY2][numX2]) {
 
@@ -340,7 +473,7 @@ int player [nPlayers];
       }
 
     p --;
-    nRow -= 2;
+    nRow --;
 
     }
       
@@ -517,6 +650,7 @@ int player [nPlayers];
         }
         **/
        nRow++;
+
       }
     
       p++;
