@@ -6,7 +6,7 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, options, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, nRow = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1;
+   int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next;
    char cRow ;
    
 
@@ -92,7 +92,7 @@ do {
    
     printf("--------------------------------------------------------------------\n\n");
 
-    for (int i = 0; i <3; i++){
+    for (int i = 0; i < cantRow; i++){
         for (int j = 0; j<9; j++){
             matriz [i][j] = (rand()%(9-1+1))+1;
             printf("|%d|\t", matriz [i][j]);
@@ -111,14 +111,11 @@ do {
     
       printf("Turno del jugador: %d\n\n", p+1);
 
-  //Verifica si ya paso el primer turno.
-  if (nRow > 0) { //Sirve para comprobar si es el primer turno.
-
      //Orden para agregar filas   
-    if (c < 6) {
+    if (cantRow < 10) {
         printf("Desea agregar una fila? [%d] s/n:", counter);
         scanf(" %c", &cRow);
-        printf("\n"); 
+        printf("\n\n"); 
         
       } else { // Si el usuario ya agrego todas las filas posibles
 
@@ -126,40 +123,65 @@ do {
         cRow = 'n';
 
       }
-    }
+    
 
     if (cRow == 's' || cRow == 'S') { //Si el usuario desea una nueva fila
 
           counter--;
-          c++;
-          cantRow++;          
+          c++;         
           d = 0;
+          next = 0;
 
-        for (int i = 0; i <cantRow; i++) {
-        for (int j = 0; j<9; j++) {
+        for (int i = 0; i < cantRow; i++) {
+          for (int j = 0; j<9; j++) {
 
-          if (matriz[i][j] == 0) {
+            if (matriz[i][j] == 0) { 
+
+              sum+= matriz[i][j];
+
+            } else {
+              
+              if (next < 9) {  
+
+              matriz[cantRow + d][next] = matriz [i][j]; 
+              next++;
+            
+              } else { 
+              
+              next = 0; d++; 
+              matriz[cantRow + d][next] = matriz [i][j]; 
+              next++;
+
+              } 
+
+            } 
+          }
+        }
+
+        cantRow += (d+1);
+        printf("%d\n", cantRow) ;
+
+       for (int i = 0; i <cantRow; i++) {
+          for (int j = 0; j<9; j++) {
+
+            if (matriz[i][j] == 0) {
             sum += matriz[i][j];
             printf(" * \t");
 
-          } else {
-          sum += matriz[i][j];
+            } else {
 
-            if (d<9) {
-  
-          printf("|%d|\t", matriz[i][j]);
-          matriz[cantRow-1][d] = matriz[i][j];
-          d++;
-          
-          } else {
+              sum += matriz[i][j]; 
+              printf("|%d|\t", matriz[i][j]);
 
-          printf("|%d|\t", matriz[i][j]);
+            } 
+         }
+        
+          printf("\n\n");
 
-            }
-          }
         }
-        printf("\n\n");
-      }
+        
+
+      
 
         
     } else {
@@ -207,7 +229,6 @@ do {
       }
 
     p --;
-    nRow --;
 
      } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
       
@@ -579,11 +600,10 @@ do {
       }
 
       p --;
-      nRow --;
+      
     }
   }
 
-    nRow = 1;
 
     //comprobacion final
     if (c == 6){
@@ -640,12 +660,14 @@ do {
     if (sum == 0 && again == 0) {
 
       complete++ ;
+      cantRow = 3;
       
 
     } else if (sum != 0 && again == 0){
 
       sum = 0;
       gameover = 0;
+      cantRow = 3;
 
     }       
     
