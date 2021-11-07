@@ -6,7 +6,8 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 0, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next;
+   int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 1, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next, emptyRow, nRow, stop, 
+   zero, cantZ, plus = 0, lastFirst, firstLast ;
    char cRow ;
    
 
@@ -82,7 +83,7 @@ int player [nPlayers];
 
    printf("\n");
 
-do {
+while (gameover != 0) {
 
     c = 0;
 
@@ -112,7 +113,7 @@ do {
       printf("Turno del jugador: %d\n\n", p+1);
 
      //Orden para agregar filas   
-    if (cantRow < 10) {
+    if (cantRow < 9) {
         printf("Desea agregar una fila? [%d] s/n:", counter);
         scanf(" %c", &cRow);
         printf("\n\n"); 
@@ -131,6 +132,8 @@ do {
           c++;         
           d = 0;
           next = 0;
+          zero = 0;
+          cantZ = 0;
 
         for (int i = 0; i < cantRow; i++) {
           for (int j = 0; j<9; j++) {
@@ -138,6 +141,7 @@ do {
             if (matriz[i][j] == 0) { 
 
               sum+= matriz[i][j];
+              zero++ ;
 
             } else {
               
@@ -158,34 +162,56 @@ do {
           }
         }
 
+        printf("%d\n", zero);
         cantRow += (d+1);
         printf("%d\n", cantRow) ;
+        if (zero > 2) {
+
+          zero = (zero / (plus+1));
+
+        }
+        printf("%d\n", zero);
+
+        if (cantRow > 9) {
+
+          cantRow = 9;
+
+        }
 
        for (int i = 0; i <cantRow; i++) {
           for (int j = 0; j<9; j++) {
 
+            
             if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
 
-            } else {
+              if (cantZ < zero) {
+                    sum += matriz[i][j];
+                    printf(" * \t");
+                    cantZ++;
+              } else {
+                  sum+= 0;
 
+                }
+
+            } else if (matriz[i][j] < 10) {
               sum += matriz[i][j]; 
               printf("|%d|\t", matriz[i][j]);
-
+              
             } 
+      
          }
         
           printf("\n\n");
 
         }
         
-
+    plus++; //Identifica si se ha usado anadir fila en el anterior turno
       
 
         
     } else {
 
+        plus = 0;
         space = 0;
         y = 0;
         x = 0;
@@ -230,8 +256,88 @@ do {
 
     p --;
 
-     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
+    } else if ((matriz[numY][numX] && matriz[numY2][numX2]) == 0){ //Verifica si se ingreasaron 0.
+
+      printf("*** Usted ha seleccionado valores vacios. ***\n\n\n");
+
+      for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf(" * \t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz [i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      }
+
+      p --;
+     
+     
+    } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
       
+
+     lastFirst = 0;
+       y = numY;
+       x = numX;
+       
+        while(y <= numY2 && x <= numX2) { //ultimo de la fila y primero de la siguiente
+
+            if(matriz[y][x] == 0){
+
+              lastFirst += 0;
+
+            } else {
+
+              lastFirst += matriz[y][x];
+
+            }
+
+            if (x<8){
+
+            x++;
+            
+            } else {
+              y++ ;
+              x = 0;
+            }
+
+          }
+
+    firstLast = 0;
+       y = numY;
+       x = numX;
+       
+        while(y >= numY2 && x >= numX2) { //primero de la fila y ultima de la anterior
+
+            if(matriz[y][x] == 0){
+
+              firstLast += 0;
+
+            } else {
+
+              firstLast += matriz[y][x];
+
+            }
+
+            if (x>0){
+
+            x--;
+            
+            } else {
+              y-- ;
+              x = 8;
+            }
+
+          }
+
+
       
       if(numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
@@ -266,7 +372,7 @@ do {
         }
         
       } else { //Si estan diagonales
-
+          
         if (numY < numY2 && numX < numX2) { //Diagonal inferior hacia la Derecha
 
           y = numY;
@@ -288,6 +394,7 @@ do {
             x++;
 
           }
+        
 
         } else if (numY < numY2 && numX > numX2) { //Diagonal inferior hacia la Izquierda
 
@@ -310,6 +417,8 @@ do {
             x--;
 
           }  
+
+          
 
         } else if (numY2 < numY && numX2 < numX) { //Diagonal superior hacia la Izquierda
 
@@ -356,8 +465,12 @@ do {
           }      
         }
 
-      }
+      } 
      
+
+      if (lastFirst == 10 || firstLast == 10) {
+        space = 10;
+      }
 
       if (space == 10){ //Comprobacion si se eligio bien. 
 
@@ -404,7 +517,7 @@ do {
     p--;
     }        
 
-     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor
+    } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor
       
       
      if (numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
@@ -578,7 +691,7 @@ do {
     p--;
     }        
 
-     } else { //Verifica que el usuario ingreso parejas equivocadas.
+    } else { //Verifica que el usuario ingreso parejas equivocadas.
 
       printf("*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
 
@@ -606,47 +719,56 @@ do {
 
 
     //comprobacion final
-    if (c == 6){
 
       again = 0;
       
+     for (int i = 0; i < cantRow ; i++) { 
+       emptyRow = 0;
 
-     for (int i = 0; i < 9 ; i++) { 
        for (int j = 0; j < 9; j++) {
          for (int k = 1; k < 9; k++) {
 
              if ((matriz [i][j] == 0) && (matriz [i][j+k] == 0)) {
 
             empty += 0;
+            emptyRow+= 0;
+            nRow = i;
 
             } else if ((matriz [i][j] + matriz [i][j+k] == 10) && (empty == 0)){
 
               again++;
+              emptyRow+= 1;
 
             } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
+              emptyRow+= 1;
 
             } else if ((matriz [i][j] + matriz [i+k][j] == 10) && (empty == 0)) {
 
               again++;
+              emptyRow+= 1;
 
             } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
+              emptyRow+= 1;
 
             } else if ((matriz [i][j] + matriz [i+k][j+k] == 10) && (empty == 0)) {
 
               again++;
+              emptyRow+= 1;
 
             } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
 
               again++;
+              emptyRow+= 1;
 
             } else {
 
               empty ++;
               again += 0;
+              emptyRow+= 1;
 
             }
          }
@@ -654,10 +776,31 @@ do {
         empty = 0;
 
        }
-     }     
-    }
+     }   
 
-    if (sum == 0 && again == 0) {
+    if (emptyRow == 0){
+
+       d = 0;
+
+       for (int i = nRow; i < (cantRow - 1); i++) {
+          for (int j = 0; j<9; j++) {
+
+            if (d < 9 ) {
+
+              if (matriz[i][j] == 0) { 
+
+                matriz [i][j] = matriz [i+1][j]; 
+                d++;              
+              }               
+            } else {
+
+              matriz [i][j] = matriz [i+1][j];
+
+            }           
+          }
+        }
+
+     } else if (sum == 0 && again == 0) {
 
       complete++ ;
       cantRow = 3;
@@ -667,7 +810,7 @@ do {
 
       sum = 0;
       gameover = 0;
-      cantRow = 3;
+      
 
     }       
     
@@ -675,9 +818,11 @@ do {
       if (p == nPlayers){ p = 0; }
 
 
-    } while ( sum != 0); 
+    } while ( sum != 0) ;
 
-   } while (gameover == 0) ;
+  
+
+} // while 
 
   printf("--------Resultados--------\n\n");
 
