@@ -6,8 +6,8 @@ int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 1, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next, emptyRow, nRow, stop, 
-   zero, cantZ, plus = 0, lastFirst, firstLast, h, exit1 = 0, n ;
+   int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 1, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next, emptyRow, nRow, stop = 0, 
+   zero, cantZ, plus = 0, lastFirst, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0;
    char cRow ;
    
 
@@ -287,63 +287,54 @@ while (gameover != 0) {
       p --;
      
     
-    } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor
+    } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor  
       
-      lastFirst = 0;
-       y = numY;
-       x = numX;
-       
-        while(y <= numY2 && x <= numX2) { //ultimo de la fila y primero de la siguiente
+      firstLast = 0;
+      h = 0;
 
-            if(matriz[y][x] == 0){
+      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
+        y1 = numY2;
+        y2 = numY;
+      } else { 
+        y1 = numY;
+        y2 = numY2;
+        }
 
-              lastFirst += 0;
-              h++;
+      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
+         for (int k = numX; k < 9; k++) {
 
-            } else {
+         if (i == y1 && k == numX ){
+           firstLast += matriz[i][k];
+         } else if (matriz[i][k] == 0) {
+           h++;
+         } else {
 
-              lastFirst += matriz[y][x];
+           firstLast += matriz[i][k];
+           
+         }
 
-            }
+        }             
+     }
 
-            if (x<8){
+     for (int i = y2; i < (y2+1); i++ ) {
+       for (int j = 0; j < (numX2 + 1); j++) {
 
-            x++;
-            
-            } else {
-              y++ ;
-              x = 0;
-            }
+         if (i == y2 && j == numX2 ){
+           firstLast += matriz[i][j];
 
-          }
+         } else if (matriz[i][j] == 0) {
+           h++;
+         } else {
 
-    firstLast = 0;
-       y = numY;
-       x = numX;
-       
-        while(y >= numY2 && x >= numX2) { //primero de la fila y ultima de la anterior
+           firstLast += matriz[i][j];
+           
+         }
+       }
+     }
 
-            if(matriz[y][x] == 0){
+     printf("%d\n", firstLast);
+     printf("h = %d\n\n", h);
 
-              firstLast += 0;
-
-            } else {
-
-              firstLast += matriz[y][x];
-
-            }
-
-            if (x>0){
-
-            x--;
-            
-            } else {
-              y-- ;
-              x = 8;
-            }
-
-          }
-      
      if (numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
         if (numY < numY2 || numX < numX2) {//Vertical y Horizontal (Derecha y Abajo)
@@ -474,6 +465,7 @@ while (gameover != 0) {
 
       }
      
+     
 
       if (n > 0) {
 
@@ -483,20 +475,55 @@ while (gameover != 0) {
 
       player[p]++;
 
-      if (lastFirst / 2 == matriz[numY][numX] && firstLast / 2 == matriz[numY][numX]) {
-        space = matriz[numY][numX];
-        player[p]--;
-        player[p] += 2;
+      if ((firstLast / 2) == matriz[numY][numX]) { // Verifica si se encontro un numero entre filas
+        space = firstLast;
 
-        if (h>0) {
-          player[p] += 2;
+        if (y1 < y2) {
+        player[p] += 2;
+        }
+
+        if (h>0) { //Verifica si hubieron 0 de por medio.
+          player[p] ++;
           }
         }
+      
 
       if (space / 2 == matriz[numY][numX]){ //Comprobacion si se eligio bien. 
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
+
+        for (int i = 0; i < cantRow; i++) { //Verifica si hay una fila completa de 0
+          for (int j = 0; j < 9 ; j++) {
+            if (matriz [i][j] == 0) {
+             zeroCounter++;
+             if (zeroCounter == 9) {
+
+               thisRow = i;
+               player[p] += 9; //Puntos por borrar una fila.
+
+             }
+            }
+          }
+
+          zeroCounter = 0;
+        }
+
+      if (thisRow > -1) {
+        for (int i = thisRow; i < (cantRow-1); i++) { //Remueve la fila si tiene solo ceros
+          for (int j = 0; j < 9 ; j++) {      
+             
+              matriz[i][j] = matriz[i+1][j];
+          
+          }
+
+        }
+
+        cantRow--;
+      }
+
+
+      printf("%d puntos\n\n", player[p] );
 
       for (int i = 0; i <cantRow; i++){
         for (int j = 0; j<9; j++){
@@ -540,61 +567,50 @@ while (gameover != 0) {
     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
       
 
-     lastFirst = 0;
-       y = numY;
-       x = numX;
-       
-        while(y <= numY2 && x <= numX2) { //ultimo de la fila y primero de la siguiente
+     firstLast = 0;
+      h = 0;
 
-            if(matriz[y][x] == 0){
+      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
+        y1 = numY2;
+        y2 = numY;
+      } else { 
+        y1 = numY;
+        y2 = numY2;
+        }
 
-              lastFirst += 0;
-              h++;
+      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
+         for (int k = numX; k < 9; k++) {
 
-            } else {
+         if (i == y1 && k == numX ){
+           firstLast += matriz[i][k];
+         } else if (matriz[i][k] == 0) {
+           h++;
+         } else {
 
-              lastFirst += matriz[y][x];
-              
+           firstLast += matriz[i][k];
+           
+         }
 
-            }
+        }             
+     }
 
-            if (x<8){
+     for (int i = y2; i < (y2+1); i++ ) {
+       for (int j = 0; j < (numX2 + 1); j++) {
 
-            x++;
-            
-            } else {
-              y++ ;
-              x = 0;
-            }
+         if (i == y2 && j == numX2 ){
+           firstLast += matriz[i][j];
 
-          }
+         } else if (matriz[i][j] == 0) {
+           h++;
+         } else {
 
-    firstLast = 0;
-       y = numY;
-       x = numX;
-       
-        while(y >= numY2 && x >= numX2) { //primero de la fila y ultima de la anterior
+           firstLast += matriz[i][j];
+           
+         }
+       }
+     }
 
-            if(matriz[y][x] == 0){
-
-              firstLast += 0;
-
-            } else {
-
-              firstLast += matriz[y][x];
-
-            }
-
-            if (x>0){
-
-            x--;
-            
-            } else {
-              y-- ;
-              x = 8;
-            }
-
-          }
+     printf("%d\n", firstLast);
 
 
       
@@ -732,28 +748,58 @@ while (gameover != 0) {
      
       if (n > 0) {
 
-        player[p] += 3;
+        player[p] ++;
 
       }
 
       player[p]++;
 
-      if (lastFirst == 10 && firstLast == 10) {
+      if (firstLast == 10) { //Verifica si la suma da 10
         space = 10;
-        player[p]--;
+
+        if (y1 < y2) {
         player[p] += 2;
-
-        if (h>0) {
-          player[p] += 2;
         }
+
+        if (h>0) { //Verifica si hubieron 0 de por medio.
+          player[p] ++;
+          }
       }
-
-
+     
 
       if (space == 10){ //Comprobacion si se eligio bien. 
 
         matriz[numY][numX] = 0;
         matriz[numY2][numX2] = 0;
+
+        for (int i = 0; i < cantRow; i++) { //Verifica si hay una fila completa de 0
+          for (int j = 0; j < 9 ; j++) {
+            if (matriz [i][j] == 0) {
+             zeroCounter++;
+             if (zeroCounter == 9) {
+
+               thisRow = i;
+               player[p] += 9; //Puntos por borrar una fila.
+
+             }
+            }
+          }
+
+          zeroCounter = 0;
+        }
+
+      if (thisRow > -1) {
+        for (int i = thisRow; i < (cantRow-1); i++) { //Remueve la fila si tiene solo ceros
+          for (int j = 0; j < 9 ; j++) {      
+             
+              matriz[i][j] = matriz[i+1][j];
+          
+          }
+
+        }
+
+        cantRow--;
+      }
 
       for (int i = 0; i <cantRow; i++){
         for (int j = 0; j<9; j++){
@@ -884,29 +930,7 @@ while (gameover != 0) {
        }
      }   
 
-    if (emptyRow == 0){
-
-       d = 0;
-
-       for (int i = nRow; i < (cantRow - 1); i++) {
-          for (int j = 0; j<9; j++) {
-
-            if (d < 9 ) {
-
-              if (matriz[i][j] == 0) { 
-
-                matriz [i][j] = matriz [i+1][j]; 
-                d++;              
-              }               
-            } else {
-
-              matriz [i][j] = matriz [i+1][j];
-
-            }           
-          }
-        }
-
-    } else if (sum == 0 && again == 0) {
+    if (sum == 0 && again == 0) {
 
       complete++ ;
       cantRow = 3;
@@ -922,7 +946,7 @@ while (gameover != 0) {
     }       
     
       p++;
-      if (p == nPlayers){ p = 0; }
+      if (p == nPlayers){ p = 0; } //reinicia el contador de jugadores
 
       if (exit1 == 1){
         sum = 0;
