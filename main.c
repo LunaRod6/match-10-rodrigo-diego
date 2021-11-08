@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 
 int main () {
@@ -7,7 +8,7 @@ int main () {
    srand(time(NULL));
    int matriz [9][9];
    int numX, numY, numX2, numY2, sum = 0, turns, counter = 6, gameover = 1, q, nPlayers, p = 0, cantRow = 3, d = 0, c = 0, space, y, x, z, empty, yF = 0, xF = 0, again = 1, complete = 1, next, emptyRow, nRow, stop = 0, 
-   zero, cantZ, plus = 0, lastFirst, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0;
+   zero, cantZ, plus = 0, lastFirst, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, pair, ok, r, r2;
    char cRow ;
    
 
@@ -873,59 +874,167 @@ while (gameover != 0) {
     //comprobacion final
 
       again = 0;
+      pair = 0;
+      ok = 0;
       
      for (int i = 0; i < cantRow ; i++) { 
-       emptyRow = 0;
-
        for (int j = 0; j < 9; j++) {
          for (int k = 1; k < 9; k++) {
+             
 
-             if ((matriz [i][j] == 0) && (matriz [i][j+k] == 0)) {
+            if ((matriz [i][j] + matriz [i][j+k]) == 10) { //Verifica si alguna pareja en la misma fila forma 10
 
-            empty += 0;
-            emptyRow+= 0;
-            nRow = i;
+              r = j;
+              while ((r+1) < j+k) {
 
-            } else if ((matriz [i][j] + matriz [i][j+k] == 10) && (empty == 0)){
+                if (matriz[i][r] == 0) {
+                  ok += 0;
+                }
 
-              again++;
-              emptyRow+= 1;
+                r++;
 
-            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
 
-              again++;
-              emptyRow+= 1;
+                again+= 0;
 
-            } else if ((matriz [i][j] + matriz [i+k][j] == 10) && (empty == 0)) {
+              }
+              
 
-              again++;
-              emptyRow+= 1;
+            } else if ((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i][j+k]) / 2 == matriz [i][j])) { //Verifica si alguna pareja en la misma fila son el mismo numero (exceptuando el 0)
 
-            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j]) / 2 == matriz [i][j])) && (empty == 0)) {
+              r = j;
+              while ((r+1) < j+k) {
 
-              again++;
-              emptyRow+= 1;
+                if (matriz[i][r] == 0) {
+                  ok += 0;
+                }
 
-            } else if ((matriz [i][j] + matriz [i+k][j+k] == 10) && (empty == 0)) {
+                r++;
 
-              again++;
-              emptyRow+= 1;
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
 
-            } else if (((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j+k]) / 2 == matriz [i][j])) && (empty == 0)) {
+                again+= 0;
 
-              again++;
-              emptyRow+= 1;
+              }
+
+            } else if ((matriz [i][j] + matriz [i+k][j]) == 10) { //Verifica si alguna pareja en la misma columna forma 10
+
+              r = i;
+              while ((r+1) < i+k) {
+
+                if (matriz[i][r] == 0) {
+                  ok += 0;
+                }
+
+                r++;
+
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
+
+                again+= 0;
+
+              }
+
+            } else if ((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j]) / 2 == matriz [i][j]))  { //Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
+
+               r = i;
+              while ((r+1) < i+k) {
+
+                if (matriz[i][r] == 0) {
+                  ok += 0;
+                }
+
+                r++;
+
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
+
+                again+= 0;
+
+              }
+
+            } else if ((matriz [i][j] + matriz [i+k][j+k]) == 10) { //Verifica si alguna pareja en la misma diagonal forma 10
+
+               r = i;
+               r2 = j;
+
+              while ((r+1) < (i+k) && (r2+1) < (j+k)) {
+
+                if (matriz[r][r2] == 0) {
+                  ok += 0;
+                }
+
+                r++;
+                r2++;
+
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
+
+                again+= 0;
+
+              }
+              
+
+            } else if ((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j+k]) / 2 == matriz [i][j])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
+
+                r = i;
+               r2 = j;
+
+              while ((r+1) < (i+k) && (r2+1) < (j+k)) {
+
+                if (matriz[r][r2] == 0) {
+                  ok += 0;
+                }
+
+                r++;
+                r2++;
+
+              }
+              
+              if (ok == 0) { 
+                
+                again++;
+              
+              } else {
+
+                again+= 0;
+
+              }
 
             } else {
 
-              empty ++;
               again += 0;
-              emptyRow+= 1;
+              
 
             }
          }
-
-        empty = 0;
 
        }
      }   
@@ -934,13 +1043,17 @@ while (gameover != 0) {
 
       complete++ ;
       cantRow = 3;
-      player [p] += 150;
+      player [p] += 150; // Puntos por rellenar el tablero
+      printf("\n\n");
+      printf("###### Felicitaciones Usted a completado el tablero #########\n\n");
       
 
     } else if (sum != 0 && again == 0){
 
       sum = 0;
       gameover = 0;
+      printf ("\n\n");
+      printf("################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
       
 
     }       
