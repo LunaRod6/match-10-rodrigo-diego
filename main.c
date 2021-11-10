@@ -4,6 +4,8 @@
 
 
 
+int printBoard (int* matriz, int cantRow) ;
+int cantZeros (int numY, int numX, int numY2, int numX2, int* matriz, int* firstLast, int* h) ;
 
 int main () {
 
@@ -11,6 +13,8 @@ int main () {
    int matriz [9][9];
    int numX, numY, numX2, numY2, sum = 0, turns = 1, counter = 4, gameover = 1, p = 0, cantRow = 3, d = 0, space, y, x, z, yF = 0, xF = 0, again = 1, complete = 1, next, zero, cantZ, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, pair, ok, r, r2, g;
    char cRow ;
+   
+   
    
 
     //instrucciones del juego
@@ -123,7 +127,7 @@ while (gameover != 0) {
     
 
     if (cRow == 's' || cRow == 'S') { //Si el usuario desea una nueva fila
-
+          turns-- ;
           counter--;         
           d = 0;
           next = 0;
@@ -166,9 +170,10 @@ while (gameover != 0) {
 
         }
 
+
+printf("--------------------------------------------------------------------\n\n");
        for (int i = 0; i <cantRow; i++) {
           for (int j = 0; j<9; j++) {
-
             
             if (matriz[i][j] == 0) {
 
@@ -197,7 +202,8 @@ while (gameover != 0) {
         
           printf("\n\n");
 
-        }         
+        }
+        printf("--------------------------------------------------------------------\n\n");         
 
         
     } else if (cRow == 'R'){// Para forzar los resultados
@@ -233,22 +239,7 @@ while (gameover != 0) {
 
         printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz[i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
+      sum = printBoard ((int*) matriz, cantRow);
 
     
 
@@ -256,26 +247,8 @@ while (gameover != 0) {
 
       printf("*** Usted ha seleccionado valores vacios. ***\n\n\n");
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
-
-      p --;
-     
-    
+      sum = printBoard ((int*) matriz, cantRow);
+       
     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor  
       
       firstLast = 0;
@@ -320,9 +293,6 @@ while (gameover != 0) {
          }
        }
      }
-
-     printf("%d\n", firstLast);
-     printf("h = %d\n\n", h);
 
      if (numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
@@ -511,98 +481,21 @@ while (gameover != 0) {
         cantRow--;
       }
 
-
-      printf("%d puntos\n\n", p );
-
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
+    sum = printBoard ((int*) matriz, cantRow);
 
     } else {
 
       printf("**** Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
-  
+    sum = printBoard ((int*) matriz, cantRow);
 
     }
     } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) { //Verifica si la suma de los numeros seleccionados da 10
       
 
-     firstLast = 0;
-      h = 0;
-
-      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
-        y1 = numY2;
-        y2 = numY;
-      } else { 
-        y1 = numY;
-        y2 = numY2;
-        }
-
-      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
-         for (int k = numX; k < 9; k++) {
-
-         if (i == y1 && k == numX ){
-           firstLast += matriz[i][k];
-         } else if (matriz[i][k] == 0) {
-           h++;
-         } else {
-
-           firstLast += matriz[i][k];
-           
-         }
-
-        }             
-     }
-
-     for (int i = y2; i < (y2+1); i++ ) {
-       for (int j = 0; j < (numX2 + 1); j++) {
-
-         if (i == y2 && j == numX2 ){
-           firstLast += matriz[i][j];
-
-         } else if (matriz[i][j] == 0) {
-           h++;
-         } else {
-
-           firstLast += matriz[i][j];
-           
-         }
-       }
-     }
-
-     printf("%d\n", firstLast);
-
-
+    cantZeros (numY, numX, numY2, numX2, (int*) matriz, &firstLast, &h);
+    printf("firstL: %d\n\n", firstLast);
+    printf("h: %d\n\n", h);
       
       if(numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
@@ -792,22 +685,7 @@ while (gameover != 0) {
         cantRow--;
       }
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
+      sum = printBoard ((int*) matriz, cantRow);
 
     } else {
 
@@ -815,22 +693,8 @@ while (gameover != 0) {
 
       p--;
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
+       sum = printBoard ((int*) matriz, cantRow);
 
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
     p--;
     }        
 
@@ -838,24 +702,7 @@ while (gameover != 0) {
 
       printf("*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
 
-      for (int i = 0; i <cantRow; i++){
-        for (int j = 0; j<9; j++){
-
-          if (matriz[i][j] == 0) {
-            sum += matriz[i][j];
-            printf(" * \t");
-
-          } else {
-          sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
-          
-          }
-
-        }
-        printf("\n\n");
-      }
-
-    
+      sum = printBoard ((int*) matriz, cantRow); 
       
     }
   
@@ -867,7 +714,7 @@ while (gameover != 0) {
       pair = 0;
       ok = 0;
       
-     for (int i = 0; i < cantRow ; i++) { //Verifica Filas
+    for (int i = 0; i < cantRow ; i++) { //Verifica Filas
        for (int j = 0; j < 8; j++) {
          for (int k = 1; k < 9; k++) {
              
@@ -892,10 +739,7 @@ while (gameover != 0) {
               
               if (ok == 0) { 
                 
-                again++;
-                printf("Este 1\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i,j+k);
-              
+                again++;            
               
               } else {
 
@@ -928,8 +772,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 2\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i,j+k);
               
               } else {
 
@@ -950,7 +792,7 @@ while (gameover != 0) {
        }   
      }
 
-      for (int i = 0; i < (cantRow-1) ; i++) { //Verifica Columnas
+    for (int i = 0; i < (cantRow-1) ; i++) { //Verifica Columnas
        for (int j = 0; j < 9; j++) {
          for (int k = 1; k < cantRow; k++) {
 
@@ -975,8 +817,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 3\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+k,j);
               
               } else {
 
@@ -1008,8 +848,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 4\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+k,j);
               
               } else {
 
@@ -1031,7 +869,7 @@ while (gameover != 0) {
        }
       }
 
-      for (int i = 0; i < (cantRow-1) ; i++) { //Verifica Diagonal 
+    for (int i = 0; i < (cantRow-1) ; i++) { //Verifica Diagonal 
        for (int j = 0; j < 8; j++) {
          for (int k = 1; k < cantRow; k++) {
 
@@ -1056,8 +894,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 5\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+k,j+k);
               
               } else {
 
@@ -1088,8 +924,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 6\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+k,j+k);
               
               } else {
 
@@ -1120,8 +954,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 7\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i-k,j-k);
               
               } else {
 
@@ -1152,8 +984,6 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("Este 8\n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+k,j-k);
               
               } else {
 
@@ -1173,7 +1003,7 @@ while (gameover != 0) {
        }
       }
    
-     for (int i = 0; i < (cantRow-1); i++) {
+    for (int i = 0; i < (cantRow-1); i++) { //Verifica ultimo y primeor de una fila
        for (int j = 0; j < 9; j++) {
          for (int k = 0; k < 9; k++) {
 
@@ -1224,8 +1054,6 @@ while (gameover != 0) {
              if (ok == 0) { 
                 
                 again++;
-                printf("Este = \n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+1,k);
               
               } else {
 
@@ -1282,8 +1110,6 @@ while (gameover != 0) {
              if (ok == 0) { 
                 
                 again++;
-                printf("Este + \n");
-                printf("%d,%d,%d,%d\n\n", i,j,i+1,k);
               
               } else {
 
@@ -1306,15 +1132,7 @@ while (gameover != 0) {
          }      
        }
      }
-                
-              
-      
-
-
-
-      printf("\n\n");
-     printf("sum = %d, again = %d\n\n", sum, again);
-
+                                   
     if (sum == 0 && again == 0) {
 
       complete++ ;
@@ -1334,8 +1152,7 @@ while (gameover != 0) {
 
     }       
     
-
-      if (exit1 == 1){
+  if (exit1 == 1){ //Termina el juego al presionar R
         sum = 0;
         gameover = 0;
       }
@@ -1343,20 +1160,162 @@ while (gameover != 0) {
     turns++;
 
 
-  } while ( sum != 0) ;
+  } while ( sum != 0) ;  
 
-  
+} // fin del while 
 
-
-} // while 
-
-  printf("--------Resultados--------\n\n");
+  printf("###--------Resultados--------###\n\n");
 
   
   
   printf("Puntaje final: %d\n\n", p);
   
-  
         return 0;
     }
 
+
+int printBoard (int* matriz, int cantRow) { //Funcion para imprimir matriz
+  int total = 0;
+  int stops = 0;
+  printf("\n");
+  printf("--------------------------------------------------------------------\n\n");
+   for (int i = 0; i <((cantRow*9)); i++){
+         
+          if (matriz[i] == 0) {
+            total += matriz[i];
+            printf(" * \t");
+            stops++ ;
+
+          } else {
+          total += matriz[i];
+          printf("|%d|\t", matriz[i]);
+          stops++ ;
+          }
+
+          if (stops == 9) {
+
+            printf("\n\n");
+            stops = 0;
+          }
+          
+          
+
+     
+        
+      }
+printf("--------------------------------------------------------------------\n\n");
+
+      return total;
+
+}
+
+int cantZeros (int numY, int numX, int numY2, int numX2, int* matriz, int* firstLast, int* h) {
+
+       firstLast = 0;
+       h = 0;
+       int y1;
+       int y2;
+
+      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
+        y1 = numY2;
+        y2 = numY;
+      } else { 
+        y1 = numY;
+        y2 = numY2;
+        }
+
+      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
+         for (int k = numX; k < 9; k++) {
+
+          if (i == y1 && k == numX ){ 
+           *firstLast += matriz[i][k];
+          } else if (matriz[i][k] == 0) {
+           *h++;
+          } else {
+
+           *firstLast += matriz[i][k];
+           
+          }
+
+        }             
+     }
+
+     for (int i = y2; i < (y2+1); i++ ) {
+       for (int j = 0; j < (numX2 + 1); j++) {
+
+         if (i == y2 && j == numX2 ){
+           *firstLast += matriz[i][j];
+
+         } else if (matriz[i][j] == 0) {
+           *h++;
+         } else {
+
+           *firstLast += matriz[i][j];
+           
+         }
+       }
+     }
+
+    
+
+}
+
+/** firstLast = 0;
+      h = 0;
+
+      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
+        y1 = numY2;
+        y2 = numY;
+      } else { 
+        y1 = numY;
+        y2 = numY2;
+        }
+
+      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
+         for (int k = numX; k < 9; k++) {
+
+          if (i == y1 && k == numX ){ 
+           firstLast += matriz[i][k];
+          } else if (matriz[i][k] == 0) {
+           h++;
+          } else {
+
+           firstLast += matriz[i][k];
+           
+          }
+
+        }             
+     }
+
+     for (int i = y2; i < (y2+1); i++ ) {
+       for (int j = 0; j < (numX2 + 1); j++) {
+
+         if (i == y2 && j == numX2 ){
+           firstLast += matriz[i][j];
+
+         } else if (matriz[i][j] == 0) {
+           h++;
+         } else {
+
+           firstLast += matriz[i][j];
+           
+         }
+       }
+     } **/
+
+/** for (int i = 0; i <cantRow; i++){
+        for (int j = 0; j<9; j++){
+
+          if (matriz[i][j] == 0) {
+            sum += matriz[i][j];
+            printf(" * \t");
+
+          } else {
+          sum += matriz[i][j];
+          printf("|%d|\t", matriz[i][j]);
+          
+          }
+
+        }
+        printf("\n\n");
+      } **/
