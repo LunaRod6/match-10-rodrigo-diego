@@ -251,48 +251,17 @@ printf("--------------------------------------------------------------------\n\n
        
     } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  //Verifica si las parejas son del mismo valor  
       
-      firstLast = 0;
-      h = 0;
+      cantZeros (numY, numX, numY2, numX2, (int*) matriz, &firstLast, &h);
+    printf("firstL: %d\n\n", firstLast);
+    printf("h: %d\n\n", h);
 
-      if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
-        y1 = numY2;
-        y2 = numY;
-      } else { 
-        y1 = numY;
-        y2 = numY2;
-        }
-
-      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
-         for (int k = numX; k < 9; k++) {
-
-         if (i == y1 && k == numX ){
-           firstLast += matriz[i][k];
-         } else if (matriz[i][k] == 0) {
-           h++;
-         } else {
-
-           firstLast += matriz[i][k];
-           
-         }
-
-        }             
-     }
-
-     for (int i = y2; i < (y2+1); i++ ) {
-       for (int j = 0; j < (numX2 + 1); j++) {
-
-         if (i == y2 && j == numX2 ){
-           firstLast += matriz[i][j];
-
-         } else if (matriz[i][j] == 0) {
-           h++;
-         } else {
-
-           firstLast += matriz[i][j];
-           
-         }
-       }
-     }
+    if (numY2 < numY) {
+      y1 = numY2;
+      y2 = numY;
+    } else {
+      y1 = numY;
+      y2 = numY2;
+    }
 
      if (numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
@@ -428,21 +397,21 @@ printf("--------------------------------------------------------------------\n\n
 
       if (n > 0) {
 
-        p += 3;
+          p++ ;
 
       }
 
-      p++;
+      p++ ;
 
       if ((firstLast / 2) == matriz[numY][numX]) { // Verifica si se encontro un numero entre filas
         space = firstLast;
 
         if (y1 < y2) {
-        p += 2;
+        p++ ;
         }
 
-        if (h>0) { //Verifica si hubieron 0 de por medio.
-          p ++;
+        if (h > 0) { //Verifica si hubieron 0 de por medio.
+          p += 2 ;
           }
         }
       
@@ -496,6 +465,14 @@ printf("--------------------------------------------------------------------\n\n
     cantZeros (numY, numX, numY2, numX2, (int*) matriz, &firstLast, &h);
     printf("firstL: %d\n\n", firstLast);
     printf("h: %d\n\n", h);
+
+    if (numY2 < numY) {
+      y1 = numY2;
+      y2 = numY;
+    } else {
+      y1 = numY;
+      y2 = numY2;
+    }
       
       if(numY == numY2 || numX == numX2) { // Si estan en la misma fila o columna
 
@@ -629,11 +606,11 @@ printf("--------------------------------------------------------------------\n\n
 
       } 
      
-      if (n > 0) {
+    if (n > 0) {
 
-        p++;
+      p++ ;
 
-      }
+    }
 
       p++;
 
@@ -641,13 +618,13 @@ printf("--------------------------------------------------------------------\n\n
         space = 10;
 
         if (y1 < y2) {
-        p += 2;
+        p++;
         }
 
         if (h>0) { //Verifica si hubieron 0 de por medio.
-          p ++;
+        p += 2;
 
-          }
+        }
       }
      
 
@@ -1211,50 +1188,44 @@ printf("--------------------------------------------------------------------\n\n
 
 int cantZeros (int numY, int numX, int numY2, int numX2, int* matriz, int* firstLast, int* h) {
 
-       firstLast = 0;
-       h = 0;
+       *firstLast = 0 ;
+       *h = 0;
        int y1;
        int y2;
+       int first;
+       int last;
 
       if(numY2 < numY) { //Verifica el orden en el que se eligieron los numeros. 
-        y1 = numY2;
-        y2 = numY;
+        y1 = ((numY2*9) + numX2) ;
+        y2 = (numY*9) + numX ;
+        first = ((numY2*9) + numX2) ;
+        last = (numY*9) + numX ;
       } else { 
-        y1 = numY;
-        y2 = numY2;
+        y1 = (numY*9) + numX ;
+        y2 = ((numY2*9) + numX2) ;
+        first = (numY*9) + numX ;
+        last = ((numY2*9) + numX2) ;
+      }
+
+      while (y1 < (y2+1)) {
+
+        if (matriz[y1] == 0) {
+
+          *h += 3 ;
+
+        } else if (matriz[y1] == first || matriz[y1] == last) {
+
+          *firstLast += matriz[y1];
+
+        } else {
+
+          *firstLast += matriz[y1];
+
         }
 
-      for (int i = y1; i < y2 ; i++) { //Verifica si se puede entre ultimo de una fila y primero de la siguiente.
-         for (int k = numX; k < 9; k++) {
 
-          if (i == y1 && k == numX ){ 
-           *firstLast += matriz[i][k];
-          } else if (matriz[i][k] == 0) {
-           *h++;
-          } else {
-
-           *firstLast += matriz[i][k];
-           
-          }
-
-        }             
-     }
-
-     for (int i = y2; i < (y2+1); i++ ) {
-       for (int j = 0; j < (numX2 + 1); j++) {
-
-         if (i == y2 && j == numX2 ){
-           *firstLast += matriz[i][j];
-
-         } else if (matriz[i][j] == 0) {
-           *h++;
-         } else {
-
-           *firstLast += matriz[i][j];
-           
-         }
-       }
-     }
+        y1++;
+      }
 
     
 
