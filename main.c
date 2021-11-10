@@ -3,11 +3,13 @@
 #include <time.h>
 
 
+
+
 int main () {
 
    srand(time(NULL));
    int matriz [9][9];
-   int numX, numY, numX2, numY2, sum = 0, turns = 1, counter = 4, gameover = 1, p = 0, cantRow = 3, d = 0, space, y, x, z, yF = 0, xF = 0, again = 1, complete = 1, next, zero, cantZ, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, pair, ok, r, r2;
+   int numX, numY, numX2, numY2, sum = 0, turns = 1, counter = 4, gameover = 1, p = 0, cantRow = 3, d = 0, space, y, x, z, yF = 0, xF = 0, again = 1, complete = 1, next, zero, cantZ, firstLast, h, exit1 = 0, n , zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, pair, ok, r, r2, g;
    char cRow ;
    
 
@@ -240,7 +242,7 @@ while (gameover != 0) {
 
           } else {
           sum += matriz[i][j];
-          printf("|%d|\t", matriz [i][j]);
+          printf("|%d|\t", matriz[i][j]);
           
           }
 
@@ -873,7 +875,10 @@ while (gameover != 0) {
             if (matriz [i][j] + matriz [i][j+k] == 10) { //Verifica si alguna pareja en la misma fila forma 10
 
               r = (j+1);
-              while (r < j+k) {
+              if (r > 7) {
+                again+= 0;
+              } else {
+                while (r < j+k) {
 
                 if (matriz[i][r] == 0) {
                   ok += 0;
@@ -888,13 +893,16 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 1\n\n");
+                printf("Este 1\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i,j+k);
+              
               
               } else {
 
                 again+= 0;
 
               }
+            }
 
               ok = 0;
               
@@ -902,6 +910,9 @@ while (gameover != 0) {
             } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i][j+k])) { //Verifica si alguna pareja en la misma fila son el mismo numero (exceptuando el 0)
 
               r = (j+1);
+                if (r > 7) {
+                again+= 0;
+              } else {
               while (r < j+k) {
 
                 if (matriz[i][r] == 0) {
@@ -917,14 +928,15 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 2\n");
-                printf("[%d,%d],[%d,%d]\n\n", i, j, i, j+k);
+                printf("Este 2\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i,j+k);
               
               } else {
 
                 again+= 0;
 
               } 
+            }
 
               ok = 0;
 
@@ -939,12 +951,15 @@ while (gameover != 0) {
      }
 
       for (int i = 0; i < (cantRow-1) ; i++) { //Verifica Columnas
-       for (int j = 0; j < 8; j++) {
+       for (int j = 0; j < 9; j++) {
          for (int k = 1; k < cantRow; k++) {
 
            if (matriz [i][j] + matriz [i+k][j] == 10) { //Verifica si alguna pareja en la misma columna forma 10
 
               r = (i+1);
+                if (r > cantRow) {
+                again+= 0;
+              } else {
               while (r < i+k) {
 
                 if (matriz[r][j] == 0) {
@@ -960,19 +975,24 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 3\n\n");
+                printf("Este 3\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+k,j);
               
               } else {
 
                 again+= 0;
 
-              } 
+              }
+            } 
 
               ok = 0;
 
-          } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i][j+k]))  { //Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
+          } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i+k][j]))  { //Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
 
                r = (i+1);
+                if (r > cantRow) {
+                again+= 0;
+              } else {
               while (r < i+k) {
 
                 if (matriz[r][j] == 0) {
@@ -988,14 +1008,15 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 4\n");
-                printf("[%d,%d],[%d,%d]\n\n", i, j, i, j+k);
+                printf("Este 4\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+k,j);
               
               } else {
 
                 again+= 0;
 
               }
+            }
 
             ok = 0;
 
@@ -1035,7 +1056,8 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 5\n\n");
+                printf("Este 5\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+k,j+k);
               
               } else {
 
@@ -1045,7 +1067,7 @@ while (gameover != 0) {
               
               ok = 0;
 
-            } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i][j+k])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
+            } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i+k][j+k])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
 
                 r = (i+1);
                r2 = (j+1);
@@ -1066,7 +1088,8 @@ while (gameover != 0) {
               if (ok == 0) { 
                 
                 again++;
-                printf("este 6\n\n");
+                printf("Este 6\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+k,j+k);
               
               } else {
 
@@ -1076,12 +1099,12 @@ while (gameover != 0) {
 
               ok = 0;
 
-            } else if (matriz [i][j] + matriz [i-k][j-k] == 10) { //Verifica si alguna pareja en la misma diagonal forma 10 (-)
+            } else if (matriz [i][j] + matriz [i+k][j-k] == 10) { //Verifica si alguna pareja en la misma diagonal forma 10 (-)
 
                r = (i+1);
-               r2 = (j+1);
+               r2 = (j-1);
 
-              while (r < (i+k) && r2 < (j+k)) {
+              while (r2 > (j-k)) {
 
                 if (matriz[r][r2] == 0) {
                   ok += 0;
@@ -1090,14 +1113,15 @@ while (gameover != 0) {
                 }
 
                 r++;
-                r2++;
+                r2--;
 
               }
               
               if (ok == 0) { 
                 
                 again++;
-                printf("este 7\n\n");
+                printf("Este 7\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i-k,j-k);
               
               } else {
 
@@ -1107,12 +1131,12 @@ while (gameover != 0) {
               
               ok = 0;
 
-            } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i][j+k])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0) (-)
+            } else if ((matriz [i][j] > 0) && (matriz [i][j] == matriz [i+k][j-k])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0) (-)
 
                 r = (i+1);
-               r2 = (j+1);
+               r2 = (j-1);
 
-              while ((r+1) < (i+k) && (r2+1) < (j+k)) {
+              while (r2 > (j-k)) {
 
                 if (matriz[r][r2] == 0) {
                   ok += 0;
@@ -1121,14 +1145,15 @@ while (gameover != 0) {
                 }
 
                 r++;
-                r2++;
+                r2--;
 
               }
               
               if (ok == 0) { 
                 
                 again++;
-                printf("este 8\n\n");
+                printf("Este 8\n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+k,j-k);
               
               } else {
 
@@ -1138,7 +1163,7 @@ while (gameover != 0) {
 
               ok = 0;
 
-            } else {
+          } else {
 
               again += 0;
               
@@ -1147,7 +1172,142 @@ while (gameover != 0) {
          }
        }
       }
+   
+     for (int i = 0; i < (cantRow-1); i++) {
+       for (int j = 0; j < 9; j++) {
+         for (int k = 0; k < 9; k++) {
 
+           if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i+1][k])) {
+
+
+             r = (i+1);
+             r2 = 0;
+             g = (j+1);
+             if (g > 8) {    
+              g = -1 ;
+             }
+
+             while (r2 <= k) {
+
+              if (g == -1) {
+
+                if (matriz[r][r2] == 0) {
+                 ok += 0;
+                } else {
+                 ok++ ;
+                          
+                }
+
+                r2++ ;
+
+              } else if (g < 9) {
+                
+                if (matriz[i][g] == 0) {
+                  ok += 0;  
+                } else {
+                   ok++ ;
+                }
+                g++ ;
+              } else {
+
+                if (matriz[r][r2] == 0) {
+                  ok += 0;              
+                } else {
+                  ok++ ;
+                 }
+
+                 r2++ ;
+              }
+              
+             }
+
+             if (ok == 0) { 
+                
+                again++;
+                printf("Este = \n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+1,k);
+              
+              } else {
+
+                again+= 0;
+
+              }
+              
+              ok = 0;
+
+
+           } else if ((matriz[i][j] + matriz[i+1][k]) == 10) {
+
+             r = (i+1);
+             r2 = 0;
+             g = (j+1);
+             if (g > 8) {    
+              g = -1 ;
+             }
+
+             while (r2 <= k) {
+
+              if (g == -1) {
+
+                if (matriz[r][r2] == 0) {
+                 ok += 0;
+                } else {
+                 ok++ ;
+                          
+                }
+
+                r2++ ;
+
+              } else if (g < 9) {
+                
+                if (matriz[i][g] == 0) {
+                  ok += 0;  
+                } else {
+                   ok++ ;
+                }
+                g++ ;
+              } else {
+
+                if (matriz[r][r2] == 0) {
+                  ok += 0;              
+                } else {
+                  ok++ ;
+                 }
+
+                 r2++ ;
+              }
+              
+             }
+
+             if (ok == 0) { 
+                
+                again++;
+                printf("Este + \n");
+                printf("%d,%d,%d,%d\n\n", i,j,i+1,k);
+              
+              } else {
+
+                again+= 0;
+
+              }
+              
+              ok = 0;
+
+
+           } else {
+
+             again += 0;
+
+
+           }
+
+
+
+         }      
+       }
+     }
+                
+              
       
 
 
@@ -1200,111 +1360,3 @@ while (gameover != 0) {
         return 0;
     }
 
-
-
-         /** else if (matriz [i][j] + matriz [i+k][j] == 10) { //Verifica si alguna pareja en la misma columna forma 10
-
-              r = i;
-              while ((r+1) < i+k) {
-
-                if (matriz[i][r] == 0) {
-                  ok += 0;
-                }
-
-                r++;
-
-              }
-              
-              if (ok == 0) { 
-                
-                again++;
-              
-              } else {
-
-                again+= 0;
-
-              }
-
-          } else if ((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j]) / 2 == matriz [i][j]))  { //Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
-
-               r = i;
-              while ((r+1) < i+k) {
-
-                if (matriz[i][r] == 0) {
-                  ok += 0;
-                }
-
-                r++;
-
-              }
-              
-              if (ok == 0) { 
-                
-                again++;
-              
-              } else {
-
-                again+= 0;
-
-              }
-
-            } else if (matriz [i][j] + matriz [i+k][j+k] == 10) { //Verifica si alguna pareja en la misma diagonal forma 10
-
-               r = i;
-               r2 = j;
-
-              while ((r+1) < (i+k) && (r2+1) < (j+k)) {
-
-                if (matriz[r][r2] == 0) {
-                  ok += 0;
-                }
-
-                r++;
-                r2++;
-
-              }
-              
-              if (ok == 0) { 
-                
-                again++;
-              
-              } else {
-
-                again+= 0;
-
-              }
-              
-
-            } else if ((matriz [i][j] > 0) && ((matriz [i][j] + matriz [i+k][j+k]) / 2 == matriz [i][j])) { //Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
-
-                r = i;
-               r2 = j;
-
-              while ((r+1) < (i+k) && (r2+1) < (j+k)) {
-
-                if (matriz[r][r2] == 0) {
-                  ok += 0;
-                }
-
-                r++;
-                r2++;
-
-              }
-              
-              if (ok == 0) { 
-                
-                again++;
-              
-              } else {
-
-                again+= 0;
-
-              }
-
-            } else {
-
-              again += 0;
-              
-
-            } **/
- 
