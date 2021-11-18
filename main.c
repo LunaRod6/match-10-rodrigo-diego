@@ -99,15 +99,13 @@ int main() {
                 "-----------------------------------------------------------\n"
                 "150\t *Por encontrar todas las parejas en el tablero. \n"
                 "-----------------------------------------------------------\n\n");
-
-                printf("--------------------------------------------------------------------\n");
-
+                
                 printf("\n");
-
                 break;
             case 2:
                 complete = 0;
                 printf("Ejecutando opcion para jugar \n\n");
+                system("clear");
 
                 while (gameover != 0) {
                     counter = 4;
@@ -763,7 +761,7 @@ int main() {
                     } while (sum != 0);  // fin del while del juego
                 }
                 char name[20];
-                printf("Ingrese el nombre del jugador: ");  // pide el nombre de jugador, guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
+                printf("Ingrese el nombre del jugador: ");  // guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
                 scanf("%s", name);
                 printf("###--------Resultados--------###\n\n");
                 printf("Puntaje final: %d\n\n", p);
@@ -773,6 +771,7 @@ int main() {
                 break;
             case 3:
                 printf("Ejecutando opcion para ver porcentaje \n\n");  // guarda los puntajes en el archivo .txt pero solo se pueden ver
+                system("clear");
                 int topScore = 0;
                 char namePlayer[20];
                 pointFile = fopen("./puntos.txt", "r");
@@ -792,10 +791,6 @@ int main() {
 
     } while (opcion != 4);  // fin del menu
 
-    printf("###--------Resultados--------###\n\n");
-
-    printf("Puntaje final: %d\n\n", p);
-
     return 0;
 }
 
@@ -809,6 +804,7 @@ void menu() {  // funcion para el menu
 int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
     int total = 0;
     int stops = 0;
+    system("clear");
     printf("\n");
     printf("--------------------------------------------------------------------\n\n");
     for (int i = 0; i < ((cantRow * 9)); i++) {
