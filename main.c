@@ -33,7 +33,7 @@ int main() {
     // loop
     do {
         menu();
-        printf("Selecione una opcion (1-4): ");  // aqui te pide que escojas una opcion del 1-4 del menu para las instrucciones, jugar, puntajes y salir del juego.
+        printf("Selecione una opcion (1-4): ");  // inicio del menu con las opciones: instrucciones, jugar, puntajes y salir del juego.
         scanf("%d", &opcion);
         printf("\n");
         switch (opcion) {
@@ -103,31 +103,29 @@ int main() {
                 printf("\n");
                 break;
             case 2:
-                complete = 0;
-                printf("Ejecutando opcion para jugar \n\n");
+                printf("\033[0mEjecutando opcion para jugar \n\n");
 
                 while (gameover != 0) {
                     counter = 4;
                     turns = 1;
 
-                    printf(
-                        "--------------------------------------------------------------------\n\n");
+                    printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
-                    printf("------------------------- Tablero [%d]: -----------------------------\n\n", complete);
+                    printf("\033[1;31m-------------------------\033[0m Tablero [%d]: \033[1;31m-----------------------------\n\n", complete);
 
                     // Creacion del espacio para la matriz junto con los numeros random.
 
-                    printf("--------------------------------------------------------------------\n\n");
+                    printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
                     for (int i = 0; i < cantRow; i++) {
                         for (int j = 0; j < 9; j++) {
                             matriz[i][j] = (rand() % (9 - 1 + 1)) + 1;
-                            printf("|%d|\t", matriz[i][j]);
+                            printf("\033[1;31m |%d|\t", matriz[i][j]);
                         }
                         printf("\n\n");
                     }
 
-                    printf("--------------------------------------------------------------------\n\n");
+                    printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
                     // Loop
                     do {
@@ -136,16 +134,16 @@ int main() {
 
                         // Aqui el usuario elije las parejas que desea eliminar
 
-                        printf("Turno #%d\n\n", turns);
+                        printf("\033[0m Turno #%d\n\n", turns);
 
                         // Orden para agregar filas
                         if (cantRow < 9) {
-                            printf("Desea agregar una fila? [%d] s/n:", counter);
+                            printf("\033[0m Desea agregar una fila? [%d] s/n:", counter);
                             scanf(" %c", &cRow);
                             printf("\n\n");
 
                         } else {  // Si el usuario ya agrego todas las filas posibles
-                            printf("Ya no puede agregar filas.\n\n");
+                            printf("\033[0m Ya no puede agregar filas.\n\n");
                             cRow = 'n';
                         }
 
@@ -184,32 +182,32 @@ int main() {
                                 cantRow = 9;
                             }
 
-                            printf("--------------------------------------------------------------------\n\n");
+                            printf("\033[1;31m--------------------------------------------------------------------\n\n");
                             for (int i = 0; i < cantRow; i++) {
                                 for (int j = 0; j < 9; j++) {
                                     if (matriz[i][j] == 0) {
                                         if (cantZ < zero) {
                                             sum += matriz[i][j];
-                                            printf(" * \t");
+                                            printf("\033[0;34m ♠ \t");
                                             cantZ++;
                                         } else {
-                                            printf(" * \t");
+                                            printf("\033[0;34m ♠ \t");
                                             sum += 0;
                                         }
 
                                     } else if (matriz[i][j] < 10) {
                                         sum += matriz[i][j];
-                                        printf("|%d|\t", matriz[i][j]);
+                                        printf("\033[1;31m|%d|\t", matriz[i][j]);
 
                                     } else {
                                         matriz[i][j] = 0;
-                                        printf(" * \t");
+                                        printf("\033[0;34m ♠ \t");
                                     }
                                 }
 
                                 printf("\n\n");
                             }
-                            printf("--------------------------------------------------------------------\n\n");
+                            printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
                         } else if (cRow == 'R') {  // Para forzar los resultados
 
@@ -221,30 +219,30 @@ int main() {
                             n = 0;  // evalua los 0 entre adyacentes
 
                             // Ordenes del usuario
-                            printf("Escoja la primera posicion Vertical:");
+                            printf("\033[0mEscoja la primera posicion Vertical:");
                             scanf("%d", &numY);
                             printf("\n");
-                            printf("Escoja la primera posicion Horizontal:");
+                            printf("\033[0mEscoja la primera posicion Horizontal:");
                             scanf("%d", &numX);
                             printf("\n");
-                            printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n", matriz[numY][numX], numY, numX);
-                            printf("Escoja la segunda posicion Vertical:");
+                            printf("\033[0mUsted ha escogido el numero: |%d| posicion: (%d,%d) \n\n", matriz[numY][numX], numY, numX);
+                            printf("\033[0mEscoja la segunda posicion Vertical:");
                             scanf("%d", &numY2);
                             printf("\n");
-                            printf("Escoja la segunda posicion Horizontal:");
+                            printf("\033[0mEscoja la segunda posicion Horizontal:");
                             scanf("%d", &numX2);
                             printf("\n");
-                            printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n\n", matriz[numY2][numX2], numY2, numX2);
+                            printf("\033[0mUsted ha escogido el numero: |%d| posicion: (%d,%d) \n\n\n", matriz[numY2][numX2], numY2, numX2);
 
                             if (numX == numX2 && numY == numY2) {  // Verificacion si las posiciones seleccionadas son iguales.
 
-                                printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
+                                printf("\033[0m** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
                             } else if ((matriz[numY][numX] && matriz[numY2][numX2]) == 0) {  // Verifica si se ingreasaron 0.
 
-                                printf("*** Usted ha seleccionado valores vacios. ***\n\n\n");
+                                printf("\033[0m*** Usted ha seleccionado valores vacios. ***\n\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
@@ -316,7 +314,7 @@ int main() {
                                     sum = printBoard((int*)matriz, cantRow);
 
                                 } else {
-                                    printf("**** Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
+                                    printf("\033[0m**** Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
 
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
@@ -389,13 +387,13 @@ int main() {
                                     sum = printBoard((int*)matriz, cantRow);
 
                                 } else {
-                                printf("**** Los numeros ingresados SI suman 10, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
+                                printf("\033[0m**** Los numeros ingresados SI suman 10, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
 
                             } else {  // Verifica que el usuario ingreso parejas equivocadas.
 
-                                printf("*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
+                                printf("\033[0m*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
                                 sum = printBoard((int*)matriz, cantRow);
                             }
                         }
@@ -741,13 +739,13 @@ int main() {
                             cantRow = 3;
                             p += 150;  // Puntos por rellenar el tablero
                             printf("\n\n");
-                            printf("###### Felicitaciones Usted a completado el tablero #########\n\n");
+                            printf("\033[0m###### Felicitaciones Usted a completado el tablero #########\n\n");
 
                         } else if (sum != 0 && again == 0) {
                             sum = 0;
                             gameover = 0;
                             printf("\n\n");
-                            printf("################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
+                            printf("\033[0m################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
                         }
 
                         if (exit1 == 1) {  // Termina el juego al presionar R
@@ -760,16 +758,16 @@ int main() {
                     } while (sum != 0);  // fin del while del juego
                 }
                 char name[20];
-                printf("Ingrese el nombre del jugador: ");  // guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
+                printf("\033[0mIngrese el nombre del jugador: ");  // guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
                 scanf("%s", name);
-                printf("###--------Resultados--------###\n\n");
-                printf("Puntaje final: %d\n\n", p);
+                printf("\033[0m###--------Resultados--------###\n\n");
+                printf("\033[0mPuntaje final: %d\n\n", p);
                 pointFile = fopen("./puntos.txt", "a");
                 fprintf(pointFile, "%d,%s\n", p, name);
                 fclose(pointFile);
                 break;
             case 3:
-                printf("Ejecutando opcion para ver porcentaje \n\n");  // guarda los puntajes en el archivo .txt pero solo se pueden ver
+                printf("\033[0mEjecutando opcion para ver porcentaje \n\n");  // guarda los puntajes en el archivo .txt pero solo se pueden ver
                 int topScore = 0;
                 char namePlayer[20];
                 pointFile = fopen("./puntos.txt", "r");
@@ -780,10 +778,10 @@ int main() {
                 printf("\n\n");
                 break;
             case 4:
-                printf("Gracias por jugar a MATCH10! \n\n");
+                printf("\033[0mGracias por jugar a MATCH10! \n\n");
                 break;
             default:
-                printf("Ingrese una opcion correcta \n\n");
+                printf("\033[0mIngrese una opcion correcta \n\n");
                 break;
         }
 
@@ -793,26 +791,26 @@ int main() {
 }
 
 void menu() {  // funcion para el menu
-    printf("1. Instrucciones del juego\n");
-    printf("2. Jugar\n");
-    printf("3. Puntaje\n");
-    printf("4. Salir del juego\n\n");
+    printf("\033[0m1. Instrucciones del juego\n");
+    printf("\033[0m2. Jugar\n");
+    printf("\033[0m3. Puntaje\n");
+    printf("\033[0m4. Salir del juego\n\n");
 }
 
 int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
     int total = 0;
     int stops = 0;
     printf("\n");
-    printf("--------------------------------------------------------------------\n\n");
+    printf("\033[1;31m--------------------------------------------------------------------\n\n");
     for (int i = 0; i < ((cantRow * 9)); i++) {
         if (matriz[i] == 0) {
             total += matriz[i];
-            printf(" * \t");
+            printf("\033[0;34m ♠ \t");
             stops++;
 
         } else {
             total += matriz[i];
-            printf("|%d|\t", matriz[i]);
+            printf("\033[1;31m|%d|\t", matriz[i]);
             stops++;
         }
 
@@ -821,7 +819,7 @@ int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
             stops = 0;
         }
     }
-    printf("--------------------------------------------------------------------\n\n");
+    printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
     return total;
 }
