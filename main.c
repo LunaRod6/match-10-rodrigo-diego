@@ -787,6 +787,8 @@ int main() {
                 char name[20];
                 printf("Ingrese el nombre del jugador: ");  // pide el nombre de jugador, guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
                 scanf("%s", name);
+                printf("###--------Resultados--------###\n\n");
+                printf("Puntaje final: %d\n\n", p);
                 pointFile = fopen("./puntos.txt", "a");
                 fprintf(pointFile, "%d,%s\n", p, name);
                 fclose(pointFile);
