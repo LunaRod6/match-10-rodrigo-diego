@@ -143,8 +143,7 @@ int main() {
 
                         // Orden para agregar filas
                         if (cantRow < 9) {
-                            printf("Desea agregar una fila? [%d] s/n:",
-                                   counter);
+                            printf("Desea agregar una fila? [%d] s/n:", counter);
                             scanf(" %c", &cRow);
                             printf("\n\n");
 
@@ -169,15 +168,13 @@ int main() {
 
                                     } else {
                                         if (next < 9) {
-                                            matriz[cantRow + d][next] =
-                                                matriz[i][j];
+                                            matriz[cantRow + d][next] = matriz[i][j];
                                             next++;
 
                                         } else {
                                             next = 0;
                                             d++;
-                                            matriz[cantRow + d][next] =
-                                                matriz[i][j];
+                                            matriz[cantRow + d][next] = matriz[i][j];
                                             next++;
                                         }
                                     }
@@ -191,9 +188,7 @@ int main() {
                                 cantRow = 9;
                             }
 
-                            printf(
-                                "----------------------------------------------"
-                                "----------------------\n\n");
+                            printf("--------------------------------------------------------------------\n\n");
                             for (int i = 0; i < cantRow; i++) {
                                 for (int j = 0; j < 9; j++) {
                                     if (matriz[i][j] == 0) {
@@ -218,9 +213,7 @@ int main() {
 
                                 printf("\n\n");
                             }
-                            printf(
-                                "----------------------------------------------"
-                                "----------------------\n\n");
+                            printf("--------------------------------------------------------------------\n\n");
 
                         } else if (cRow == 'R') {  // Para forzar los resultados
 
@@ -238,34 +231,24 @@ int main() {
                             printf("Escoja la primera posicion Horizontal:");
                             scanf("%d", &numX);
                             printf("\n");
-                            printf(
-                                "Usted ha escogido el numero: |%d| posicion: "
-                                "(%d,%d) \n\n",
-                                matriz[numY][numX], numY, numX);
+                            printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n", matriz[numY][numX], numY, numX);
                             printf("Escoja la segunda posicion Vertical:");
                             scanf("%d", &numY2);
                             printf("\n");
                             printf("Escoja la segunda posicion Horizontal:");
                             scanf("%d", &numX2);
                             printf("\n");
-                            printf(
-                                "Usted ha escogido el numero: |%d| posicion: "
-                                "(%d,%d) \n\n\n",
-                                matriz[numY2][numX2], numY2, numX2);
+                            printf("Usted ha escogido el numero: |%d| posicion: (%d,%d) \n\n\n", matriz[numY2][numX2], numY2, numX2);
 
                             if (numX == numX2 && numY == numY2) {  // Verificacion si las posiciones seleccionadas son iguales.
 
-                                printf(
-                                    "** Usted ha seleccionado la misma "
-                                    "posicion, vuelvalo a intentar. **\n\n");
+                                printf("** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
                             } else if ((matriz[numY][numX] && matriz[numY2][numX2]) == 0) {  // Verifica si se ingreasaron 0.
 
-                                printf(
-                                    "*** Usted ha seleccionado valores vacios. "
-                                    "***\n\n\n");
+                                printf("*** Usted ha seleccionado valores vacios. ***\n\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
@@ -337,7 +320,7 @@ int main() {
                                     sum = printBoard((int*)matriz, cantRow);
 
                                 } else {
-                                    printf("****Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar****\n\n");
+                                    printf("**** Los numeros ingresados SI son iguales, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
 
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
@@ -410,15 +393,13 @@ int main() {
                                     sum = printBoard((int*)matriz, cantRow);
 
                                 } else {
-                                    printf(
-                                        "****Los numeros ingresados SI suman 10, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
+                                printf("**** Los numeros ingresados SI suman 10, pero tienen obstaculos de por medio. Vuelvalo a intentar ****\n\n");
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
 
                             } else {  // Verifica que el usuario ingreso parejas equivocadas.
 
-                                printf(
-                                    "***Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar***\n\n\n");
+                                printf("*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
                                 sum = printBoard((int*)matriz, cantRow);
                             }
                         }
@@ -659,7 +640,7 @@ int main() {
                             }
                         }
 
-                        for (int i = 0; i < (cantRow - 1); i++) {  // Verifica ultimo y primeor de una fila
+                        for (int i = 0; i < (cantRow - 1); i++) {  // Verifica ultimo y primero de una fila
                             for (int j = 0; j < 9; j++) {
                                 for (int k = 0; k < 9; k++) {
                                     if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + 1][k])) {
@@ -764,15 +745,13 @@ int main() {
                             cantRow = 3;
                             p += 150;  // Puntos por rellenar el tablero
                             printf("\n\n");
-                            printf(
-                                "###### Felicitaciones Usted a completado el tablero #########\n\n");
+                            printf("###### Felicitaciones Usted a completado el tablero #########\n\n");
 
                         } else if (sum != 0 && again == 0) {
                             sum = 0;
                             gameover = 0;
                             printf("\n\n");
-                            printf(
-                                "################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
+                            printf("################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
                         }
 
                         if (exit1 == 1) {  // Termina el juego al presionar R
@@ -799,7 +778,7 @@ int main() {
                 char namePlayer[20];
                 pointFile = fopen("./puntos.txt", "r");
                 while (fscanf(pointFile, "%d,%s", &topScore, namePlayer) != EOF) {
-                    printf("%s\t%d\n", namePlayer, topScore);
+                printf("%s\t%d\n", namePlayer, topScore);
                 }
                 fclose(pointFile);
                 printf("\n\n");
@@ -832,8 +811,7 @@ int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
     int total = 0;
     int stops = 0;
     printf("\n");
-    printf(
-        "--------------------------------------------------------------------\n\n");
+    printf("--------------------------------------------------------------------\n\n");
     for (int i = 0; i < ((cantRow * 9)); i++) {
         if (matriz[i] == 0) {
             total += matriz[i];
@@ -851,8 +829,7 @@ int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
             stops = 0;
         }
     }
-    printf(
-        "--------------------------------------------------------------------\n\n");
+    printf("--------------------------------------------------------------------\n\n");
 
     return total;
 }
