@@ -181,8 +181,7 @@ int main() {
                                 }
                             }
 
-                            cantRow +=
-                                (d + 1);  // Agrega filas dependiendo del valor de d
+                            cantRow += (d + 1);  // Agrega filas dependiendo del valor de d
 
                             if (cantRow > 9) {
                                 cantRow = 9;
