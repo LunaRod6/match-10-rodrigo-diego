@@ -105,7 +105,6 @@ int main() {
             case 2:
                 complete = 0;
                 printf("Ejecutando opcion para jugar \n\n");
-                system("clear");
 
                 while (gameover != 0) {
                     counter = 4;
@@ -771,7 +770,6 @@ int main() {
                 break;
             case 3:
                 printf("Ejecutando opcion para ver porcentaje \n\n");  // guarda los puntajes en el archivo .txt pero solo se pueden ver
-                system("clear");
                 int topScore = 0;
                 char namePlayer[20];
                 pointFile = fopen("./puntos.txt", "r");
@@ -804,7 +802,6 @@ void menu() {  // funcion para el menu
 int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
     int total = 0;
     int stops = 0;
-    system("clear");
     printf("\n");
     printf("--------------------------------------------------------------------\n\n");
     for (int i = 0; i < ((cantRow * 9)); i++) {
