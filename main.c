@@ -103,6 +103,7 @@ int main() {
                 printf("\n");
                 break;
             case 2:
+                complete = 0;
                 printf("\033[0mEjecutando opcion para jugar \n\n");
 
                 while (gameover != 0) {
@@ -134,16 +135,16 @@ int main() {
 
                         // Aqui el usuario elije las parejas que desea eliminar
 
-                        printf("\033[0m Turno #%d\n\n", turns);
+                        printf("\033[0mTurno #%d\n\n", turns);
 
                         // Orden para agregar filas
                         if (cantRow < 9) {
-                            printf("\033[0m Desea agregar una fila? [%d] s/n:", counter);
+                            printf("\033[0mDesea agregar una fila? [%d] s/n:", counter);
                             scanf(" %c", &cRow);
                             printf("\n\n");
 
                         } else {  // Si el usuario ya agrego todas las filas posibles
-                            printf("\033[0m Ya no puede agregar filas.\n\n");
+                            printf("\033[0mYa no puede agregar filas.\n\n");
                             cRow = 'n';
                         }
 
