@@ -22,18 +22,15 @@ int main() {
     FILE* pointFile;
     srand(time(NULL));
     int matriz[9][9];
-    int numX, numY, numX2, numY2,
-        sum = 0, turns = 1, counter = 4, gameover = 1, p = 0, cantRow = 3,
-        d = 0, space = 0, again = 1, complete = 1, next, zero, cantZ, firstLast,
-        h, exit1 = 0, n, zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, ok, r,
-        r2, g;
+    int numX, numY, numX2, numY2, sum = 0, turns = 1, counter = 4, gameover = 1, p = 0, cantRow = 3, d = 0, space = 0, again = 1, complete = 1, next, zero, cantZ, firstLast, h, exit1 = 0, n, zeroCounter = 0, thisRow = -1, y1 = 0, y2 = 0, ok, r, r2, g;
     char cRow;
     int opcion;
 
     // loop
     do {
+        // inicio del menu con las opciones: instrucciones, jugar, puntajes y salir del juego.
         menu();
-        printf("Selecione una opcion (1-4): ");  // inicio del menu con las opciones: instrucciones, jugar, puntajes y salir del juego.
+        printf("Selecione una opcion (1-4): ");  
         scanf("%d", &opcion);
         printf("\n");
         switch (opcion) {
@@ -143,12 +140,14 @@ int main() {
                             scanf(" %c", &cRow);
                             printf("\n\n");
 
-                        } else {  // Si el usuario ya agrego todas las filas posibles
+                        // Si el usuario ya agrego todas las filas posibles
+                        } else {  
                             printf("\033[0mYa no puede agregar filas.\n\n");
                             cRow = 'n';
                         }
 
-                        if (cRow == 's' || cRow =='S') {  // Si el usuario desea una nueva fila
+                        // Si el usuario desea una nueva fila
+                        if (cRow == 's' || cRow =='S') {  
                             turns--;
                             counter--;
                             d = 0;
@@ -177,8 +176,8 @@ int main() {
                                 }
                             }
 
-                            cantRow += (d + 1);  // Agrega filas dependiendo del valor de d
-
+                            // Agrega filas dependiendo del valor de d
+                            cantRow += (d + 1);  
                             if (cantRow > 9) {
                                 cantRow = 9;
                             }
@@ -210,14 +209,17 @@ int main() {
                             }
                             printf("\033[1;31m--------------------------------------------------------------------\n\n");
 
-                        } else if (cRow == 'R') {  // Para forzar los resultados
+                        // Para forzar los resultados
+                        } else if (cRow == 'R') {  
 
                             exit1 = 1;
 
                         } else {
                             space = 0;
-                            h = 0;  // evalua los 0 entre ultima y primera fila
-                            n = 0;  // evalua los 0 entre adyacentes
+                            // evalua los 0 entre ultima y primera fila
+                            h = 0;  
+                            // evalua los 0 entre adyacentes
+                            n = 0;  
 
                             // Ordenes del usuario
                             printf("\033[0mEscoja la primera posicion Vertical:");
@@ -235,19 +237,22 @@ int main() {
                             printf("\n");
                             printf("\033[0mUsted ha escogido el numero: |%d| posicion: (%d,%d) \n\n\n", matriz[numY2][numX2], numY2, numX2);
 
-                            if (numX == numX2 && numY == numY2) {  // Verificacion si las posiciones seleccionadas son iguales.
+                            // Verificacion si las posiciones seleccionadas son iguales.
+                            if (numX == numX2 && numY == numY2) {  
 
                                 printf("\033[0m** Usted ha seleccionado la misma posicion, vuelvalo a intentar. **\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
-                            } else if ((matriz[numY][numX] && matriz[numY2][numX2]) == 0) {  // Verifica si se ingreasaron 0.
+                            // Verifica si se ingreasaron 0.
+                            } else if ((matriz[numY][numX] && matriz[numY2][numX2]) == 0) {  
 
                                 printf("\033[0m*** Usted ha seleccionado valores vacios. ***\n\n\n");
 
                                 sum = printBoard((int*)matriz, cantRow);
 
-                            } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  // Verifica si las parejas son del mismo valor
+                            // Verifica si las parejas son del mismo valor
+                            } else if (matriz[numY][numX] == matriz[numY2][numX2]) {  
 
                                 cantZeros(numY, numX, numY2, numX2, (int*)matriz, &firstLast, &h);
 
@@ -271,30 +276,35 @@ int main() {
 
                                 p++;
 
-                                if ((firstLast / 2) == matriz[numY][numX]) {  // Verifica si se encontro un numero entre filas
+                                // Verifica si se encontro un numero entre filas
+                                if ((firstLast / 2) == matriz[numY][numX]) {  
                                     space = firstLast;
 
                                     if (y1 < y2) {
                                         p++;
                                     }
 
-                                    if (h > 0) {  // Verifica si hubieron 0 de por medio.
+                                    // Verifica si hubieron 0 de por medio.
+                                    if (h > 0) {  
                                         p += 2;
                                     }
                                 }
 
-                                if (space / 2 == matriz[numY][numX]) {  // Comprobacion si se eligio bien.
+                                // Comprobacion si se eligio bien.
+                                if (space / 2 == matriz[numY][numX]) {  
 
                                     matriz[numY][numX] = 0;
                                     matriz[numY2][numX2] = 0;
 
-                                    for (int i = 0; i < cantRow; i++) {  // Verifica si hay una fila completa de 0
+                                    // Verifica si hay una fila completa de 0
+                                    for (int i = 0; i < cantRow; i++) {  
                                         for (int j = 0; j < 9; j++) {
                                             if (matriz[i][j] == 0) {
                                                 zeroCounter++;
                                                 if (zeroCounter == 9) {
                                                     thisRow = i;
-                                                    p += 9;  // Puntos por borrar una fila.
+                                                    p += 9;
+                                                    // Puntos por borrar una fila.
                                                 }
                                             }
                                         }
@@ -303,7 +313,8 @@ int main() {
                                     }
 
                                     if (thisRow > -1) {
-                                        for (int i = thisRow; i < (cantRow - 1); i++) {  // Remueve la fila si tiene solo ceros
+                                        // Remueve la fila si tiene solo ceros
+                                        for (int i = thisRow; i < (cantRow - 1); i++) {  
                                             for (int j = 0; j < 9; j++) {
                                                 matriz[i][j] = matriz[i + 1][j];
                                             }
@@ -319,7 +330,9 @@ int main() {
 
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
-                            } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {  // Verifica si la suma de los numeros seleccionados da 10
+
+                            // Verifica si la suma de los numeros seleccionados da 10
+                            } else if (matriz[numY][numX] + matriz[numY2][numX2] == 10) {  
 
                                 cantZeros(numY, numX, numY2, numX2, (int*)matriz, &firstLast, &h);
 
@@ -344,30 +357,35 @@ int main() {
 
                                 p++;
 
-                                if (firstLast == 10) {  // Verifica si la suma da 10
+                                // Verifica si la suma da 10
+                                if (firstLast == 10) {  
                                     space = 10;
 
                                     if (y1 < y2) {
                                         p++;
                                     }
 
-                                    if (h > 0) {  // Verifica si hubieron 0 de por medio.
+                                    // Verifica si hubieron 0 de por medio.
+                                    if (h > 0) {  
                                         p += 2;
                                     }
                                 }
 
-                                if (space == 10) {  // Comprobacion si se eligio bien.
+                                // Comprobacion si se eligio bien.
+                                if (space == 10) {  
 
                                     matriz[numY][numX] = 0;
                                     matriz[numY2][numX2] = 0;
 
-                                    for (int i = 0; i < cantRow; i++) {  // Verifica si hay una fila completa de 0
+                                    // Verifica si hay una fila completa de 0
+                                    for (int i = 0; i < cantRow; i++) {  
                                         for (int j = 0; j < 9; j++) {
                                             if (matriz[i][j] == 0) {
                                                 zeroCounter++;
                                                 if (zeroCounter == 9) {
                                                     thisRow = i;
-                                                    p += 9;  // Puntos por borrar una fila.
+                                                    p += 9;
+                                                    // Puntos por borrar una fila.
                                                 }
                                             }
                                         }
@@ -376,7 +394,8 @@ int main() {
                                     }
 
                                     if (thisRow > -1) {
-                                        for (int i = thisRow; i < (cantRow - 1); i++) {  // Remueve la fila si tiene solo ceros
+                                        // Remueve la fila si tiene solo ceros
+                                        for (int i = thisRow; i < (cantRow - 1); i++) {  
                                             for (int j = 0; j < 9; j++) {
                                                 matriz[i][j] = matriz[i + 1][j];
                                             }
@@ -392,7 +411,8 @@ int main() {
                                     sum = printBoard((int*)matriz, cantRow);
                                 }
 
-                            } else {  // Verifica que el usuario ingreso parejas equivocadas.
+                            // Verifica que el usuario ingreso parejas equivocadas.
+                            } else {  
 
                                 printf("\033[0m*** Uno o ambos de los valores ingresados son incorrectos, vuelvalo a intentar ***\n\n\n");
                                 sum = printBoard((int*)matriz, cantRow);
@@ -404,10 +424,12 @@ int main() {
                         again = 0;
                         ok = 0;
 
-                        for (int i = 0; i < cantRow; i++) {  // Verifica Filas
+                        // Verifica Filas
+                        for (int i = 0; i < cantRow; i++) {  
                             for (int j = 0; j < 8; j++) {
                                 for (int k = 1; k < 9; k++) {
-                                    if (matriz[i][j] + matriz[i][j + k] == 10) {  // Verifica si alguna pareja en la misma fila forma 10
+                                    // Verifica si alguna pareja en la misma fila forma 10
+                                    if (matriz[i][j] + matriz[i][j + k] == 10) {  
                                         r = (j + 1);
                                         if (r > 7) {
                                             again += 0;
@@ -430,7 +452,8 @@ int main() {
 
                                         ok = 0;
 
-                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i][j + k])) {  // Verifica si alguna pareja en la misma fila son el mismo numero (exceptuando el 0)
+                                    // Verifica si alguna pareja en la misma fila son el mismo numero (exceptuando el 0)
+                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i][j + k])) {  
 
                                         r = (j + 1);
                                         if (r > 7) {
@@ -463,10 +486,12 @@ int main() {
                             }
                         }
 
-                        for (int i = 0; i < (cantRow - 1);i++) {  // Verifica Columnas
+                        // Verifica Columnas
+                        for (int i = 0; i < (cantRow - 1);i++) {  
                             for (int j = 0; j < 9; j++) {
                                 for (int k = 1; k < cantRow; k++) {
-                                    if (matriz[i][j] + matriz[i + k][j] == 10) {  // Verifica si alguna pareja en la misma columna forma 10
+                                    // Verifica si alguna pareja en la misma columna forma 10
+                                    if (matriz[i][j] + matriz[i + k][j] == 10) {  
 
                                         r = (i + 1);
                                         if (r > cantRow) {
@@ -492,7 +517,8 @@ int main() {
 
                                         ok = 0;
 
-                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j])) {  // Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
+                                    // Verifica si alguna pareja en la misma columna son el mismo numero (exceptuando el 0)
+                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j])) {  
 
                                         r = (i + 1);
                                         if (r > cantRow) {
@@ -525,10 +551,12 @@ int main() {
                             }
                         }
 
-                        for (int i = 0; i < (cantRow - 1); i++) {  // Verifica Diagonal
+                        // Verifica Diagonal
+                        for (int i = 0; i < (cantRow - 1); i++) {  
                             for (int j = 0; j < 8; j++) {
                                 for (int k = 1; k < cantRow; k++) {
-                                    if (matriz[i][j] + matriz[i + k][j + k] == 10) {  // Verifica si alguna pareja en la misma diagonal forma 10
+                                    // Verifica si alguna pareja en la misma diagonal forma 10
+                                    if (matriz[i][j] + matriz[i + k][j + k] == 10) {  
 
                                         r = (i + 1);
                                         r2 = (j + 1);
@@ -553,7 +581,8 @@ int main() {
 
                                         ok = 0;
 
-                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j +k])) {  // Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
+                                    // Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0)
+                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j +k])) {  
 
                                         r = (i + 1);
                                         r2 = (j + 1);
@@ -578,7 +607,8 @@ int main() {
 
                                         ok = 0;
 
-                                    } else if (matriz[i][j] + matriz[i + k][j - k] == 10) {  // Verifica si alguna pareja en la misma diagonal forma 10 (-)
+                                    // Verifica si alguna pareja en la misma diagonal forma 10 (-)
+                                    } else if (matriz[i][j] + matriz[i + k][j - k] == 10) {  
 
                                         r = (i + 1);
                                         r2 = (j - 1);
@@ -603,7 +633,8 @@ int main() {
 
                                         ok = 0;
 
-                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j - k])) {  // Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0) (-)
+                                    // Verifica si alguna pareja en la misma diagonal son el mismo numero (exceptuando el 0) (-)
+                                    } else if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + k][j - k])) {  
 
                                         r = (i + 1);
                                         r2 = (j - 1);
@@ -635,7 +666,8 @@ int main() {
                             }
                         }
 
-                        for (int i = 0; i < (cantRow - 1); i++) {  // Verifica ultimo y primero de una fila
+                        // Verifica ultimo y primero de una fila
+                        for (int i = 0; i < (cantRow - 1); i++) {  
                             for (int j = 0; j < 9; j++) {
                                 for (int k = 0; k < 9; k++) {
                                     if ((matriz[i][j] > 0) && (matriz[i][j] == matriz[i + 1][k])) {
@@ -738,7 +770,8 @@ int main() {
                         if (sum == 0 && again == 0) {
                             complete++;
                             cantRow = 3;
-                            p += 150;  // Puntos por rellenar el tablero
+                            p += 150;
+                            // Puntos por rellenar el tablero
                             printf("\n\n");
                             printf("\033[0m###### Felicitaciones Usted a completado el tablero #########\n\n");
 
@@ -749,17 +782,20 @@ int main() {
                             printf("\033[0m################ Ya no hay parejas que formar, gracias por jugar!. ################\n\n");
                         }
 
-                        if (exit1 == 1) {  // Termina el juego al presionar R
+                        // Termina el juego al presionar R
+                        if (exit1 == 1) {  
                             sum = 0;
                             gameover = 0;
                         }
 
                         turns++;
 
-                    } while (sum != 0);  // fin del while del juego
+                    } while (sum != 0);
+                    // fin del while del juego
                 }
+                // guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
                 char name[20];
-                printf("\033[0mIngrese el nombre del jugador: ");  // guarda los puntos con el nombre del jugador en un archivo .txt que se puede leer y modificar lo guardado
+                printf("\033[0mIngrese el nombre del jugador: ");  
                 scanf("%s", name);
                 printf("\033[0m###--------Resultados--------###\n\n");
                 printf("\033[0mPuntaje final: %d\n\n", p);
@@ -768,7 +804,8 @@ int main() {
                 fclose(pointFile);
                 break;
             case 3:
-                printf("\033[0mEjecutando opcion para ver porcentaje \n\n");  // guarda los puntajes en el archivo .txt pero solo se pueden ver
+            // guarda los puntajes en el archivo .txt pero solo se pueden ver
+                printf("\033[0mEjecutando opcion para ver porcentaje \n\n");  
                 int topScore = 0;
                 char namePlayer[20];
                 pointFile = fopen("./puntos.txt", "r");
@@ -786,19 +823,22 @@ int main() {
                 break;
         }
 
-    } while (opcion != 4);  // fin del menu
+    } while (opcion != 4);
+    // fin del menu
 
     return 0;
 }
 
-void menu() {  // funcion para el menu
+// funcion para el menu
+void menu() {  
     printf("\033[0m1. Instrucciones del juego\n");
     printf("\033[0m2. Jugar\n");
     printf("\033[0m3. Puntaje\n");
     printf("\033[0m4. Salir del juego\n\n");
 }
 
-int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
+// Funcion para imprimir matriz
+int printBoard(int* matriz, int cantRow) {  
     int total = 0;
     int stops = 0;
     printf("\n");
@@ -825,7 +865,8 @@ int printBoard(int* matriz, int cantRow) {  // Funcion para imprimir matriz
     return total;
 }
 
-int cantZeros(int numY, int numX, int numY2, int numX2, int* matriz, int* firstLast, int* h) {  // Verifica finales e inicios de filas
+// Verifica finales e inicios de filas
+int cantZeros(int numY, int numX, int numY2, int numX2, int* matriz, int* firstLast, int* h) {  
     *firstLast = 0;
     *h = 0;
     int y1;
@@ -833,7 +874,8 @@ int cantZeros(int numY, int numX, int numY2, int numX2, int* matriz, int* firstL
     int first;
     int last;
 
-    if (numY2 < numY) {  // Verifica el orden en el que se eligieron los numeros.
+    // Verifica el orden en el que se eligieron los numeros.
+    if (numY2 < numY) {  
         y1 = ((numY2 * 9) + numX2);
         y2 = (numY * 9) + numX;
         first = ((numY2 * 9) + numX2);
@@ -867,7 +909,8 @@ int rowColumn(int numY, int numX, int numY2, int numX2, int* matriz, int* n, int
     int last;
     *space = 0;
 
-    if ((numY2 < numY) || (numX2 < numX)) {  // Verifica el orden en el que se eligieron los numeros.
+    // Verifica el orden en el que se eligieron los numeros.
+    if ((numY2 < numY) || (numX2 < numX)) {  
         y1 = ((numY2 * 9) + numX2);
         y2 = (numY * 9) + numX;
         first = ((numY2 * 9) + numX2);
@@ -917,7 +960,8 @@ int diagonalP(int numY, int numX, int numY2, int numX2, int* matriz, int* n, int
     int diagon2;
     *space = 0;
 
-    if (numY2 < numY) {  // Verifica el orden en el que se eligieron los numeros.
+    // Verifica el orden en el que se eligieron los numeros.
+    if (numY2 < numY) {  
         y1 = ((numY2 * 9) + numX2);
         y2 = (numY * 9) + numX;
         first = ((numY2 * 9) + numX2);
