@@ -103,7 +103,7 @@ int main() {
                 printf("\n");
                 break;
             case 2:
-                complete = 0;
+                complete = 1;
                 printf("\033[0mEjecutando opcion para jugar \n\n");
 
                 while (gameover != 0) {
